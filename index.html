@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MedicalGuard · Pracsoft Edition — Billing Oversight & Internal Audit | Verticert AI</title>
+<meta name="description" content="MedicalGuard Pracsoft Edition: MBS billing oversight, internal-audit workflow, AHPRA monitoring, and AI-powered billing optimisation for Australian primary care networks.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/medicalguard.css">
+
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <a class="logo-wrap" href="#">
+    <svg class="logo-icon" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="2" width="38" height="38" rx="3" fill="none" stroke="#0d7a6c" stroke-width="2.5"/>
+      <polyline points="9,21 18,31 33,13" fill="none" stroke="#0d7a6c" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div>
+      <div class="logo-name">Medical<em>Guard</em></div>
+      <div class="logo-sub">Pracsoft Edition &middot; Verticert AI</div>
+    </div>
+  </a>
+  <div class="topbar-c">
+    <span class="ntab on" onclick="show('overview')">Dashboard</span>
+    <span class="ntab" onclick="show('heatmap')">Item Heatmap</span>
+    <span class="ntab" onclick="show('providers')">Providers</span>
+    <span class="ntab" onclick="show('audit')">Internal Audit</span>
+    <span class="ntab" onclick="show('allied')">Allied Health</span>
+    <span class="ntab" onclick="show('rules')">Rule Library</span>
+    <span class="ntab" onclick="show('cdm')">CDM / MHTP</span>
+    <span class="ntab" onclick="show('mbs')">MBS Analytics</span>
+    <span class="ntab" onclick="show('auditpack')">Reports</span>
+    <span class="ntab" onclick="show('optimise')" style="color:#d97706;border-bottom-color:transparent" id="ntab-optimise">&#9733; Billing Optimiser</span>
+  </div>
+  <div class="topbar-r">
+    <div class="ps-chip"><span class="pulse"></span>Pracsoft &middot; Live</div>
+    <span class="clk" id="clk">--:-- AEST</span>
+    <button class="btn btn-ghost btn-sm" onclick="show('help')" style="font-size:.65rem;padding:.25rem .6rem;margin-left:.3rem">? Help</button>
+    <span class="demo-chip">DEMO</span>
+  </div>
+</header>
+
+<div class="shell">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sgrp">Billing Oversight</div>
+  <a class="si on" onclick="show('overview')"><span class="si-ico">&#9672;</span>Dashboard<span class="sb w">4</span></a>
+  <a class="si" onclick="show('heatmap')"><span class="si-ico">&#11041;</span>Item Heatmap<span class="sb urg">2</span></a>
+  <a class="si" onclick="show('providers')"><span class="si-ico">&#128105;</span>All Providers</a>
+  <a class="si" onclick="provDrill('patel')"><span class="si-ico">&#9888;</span>Dr M. Patel<span class="sb urg">High</span></a>
+  <a class="si" onclick="provDrill('whittaker')"><span class="si-ico">&#9888;</span>Dr A. Whittaker<span class="sb w">Elevated</span></a>
+  <a class="si" onclick="provDrill('khan')"><span class="si-ico">&#9888;</span>Dr S. Khan<span class="sb w">Elevated</span></a>
+  <a class="si" onclick="show('mbs')"><span class="si-ico">&#128202;</span>MBS Analytics<span class="sb bl">Live</span></a>
+  <div class="sgrp">Audit</div>
+  <a class="si" onclick="show('audit')"><span class="si-ico">&#128203;</span>Internal Audit<span class="sb w">7 Open</span></a>
+  <a class="si" onclick="show('rules')"><span class="si-ico">&#128218;</span>Rule Library<span class="sb bl">240+</span></a>
+  <a class="si" onclick="show('eighty')"><span class="si-ico">&#9201;</span>80/20 Monitor</a>
+  <div class="sgrp">Allied Health</div>
+  <a class="si" onclick="show('allied')"><span class="si-ico">&#129306;</span>Allied Register<span class="sb bl">8</span></a>
+  <a class="si" onclick="show('cdm')"><span class="si-ico">&#128203;</span>CDM / MHTP<span class="sb w">3 Due</span></a>
+  <div class="sgrp">Compliance</div>
+  <a class="si" onclick="show('ahpra')"><span class="si-ico">&#128219;</span>AHPRA Register<span class="sb urg">1</span></a>
+  <a class="si" onclick="show('privacy')"><span class="si-ico">&#128274;</span>Privacy Act</a>
+  <a class="si" onclick="show('auditpack')"><span class="si-ico">&#128193;</span>Audit Packages</a>
+  <div class="sgrp">Revenue Intelligence</div>
+  <a class="si" onclick="show('optimise')" style="color:#b45309 !important;font-weight:600 !important"><span class="si-ico">&#9733;</span>Billing Optimiser<span class="sb" style="background:#fffbeb;color:#92400e;border:1px solid #fcd34d">AI</span></a>
+  <div class="sgrp">Help &amp; Support</div>
+  <a class="si" onclick="show('help')"><span class="si-ico">?</span>Help &amp; FAQ</a>
+  <a class="si" onclick="show('glossary')"><span class="si-ico">&#128218;</span>MBS Glossary</a>
+  <a class="si" onclick="startTour()"><span class="si-ico">&#9654;</span>Guided Tour</a>
+  <a class="si" style="color:#0d7a6c !important" href="mailto:hello@verticertai.com.au"><span class="si-ico">&#9993;</span>Contact Verticert AI</a>
+</nav>
+
+<main class="content">
+
+<!-- ══ OVERVIEW ══ -->
+<section class="panel on" id="panel-overview">
+  <div class="phead">
+    <div>
+      <div class="ew">Pracsoft Network &middot; MBS Billing Oversight</div>
+      <div class="ptitle">Billing &amp; Compliance Dashboard</div>
+      <div class="psub">6 clinics &middot; 24 GPs &middot; 8 allied health &middot; 42,318 claims this month &middot; Pracsoft read-only feed &middot; Updated every 15 minutes &middot; The single view your practice managers, principals, and audit committee need every morning</div>
+    </div>
+    <div style="display:flex;gap:.45rem;align-items:center">
+      <select id="date-range" onchange="setDateRange(this.value)" style="background:#f8fafc;border:1px solid #dde2ea;color:#334155;font-family:var(--mono);font-size:.58rem;padding:.3rem .6rem;border-radius:4px;cursor:pointer">
+        <option value="30">Last 30 days</option>
+        <option value="90">Last 90 days</option>
+        <option value="365">Last 12 months</option>
+      </select>
+      <button class="btn btn-c btn-sm" onclick="show('audit')">Run Internal Audit</button>
+      <button class="btn btn-ghost btn-sm" onclick="show('auditpack')">Board Report</button>
+    </div>
+  </div>
+
+  <div class="g4 mb">
+    <div class="card"><div class="stripe c"></div>
+      <div class="cl c">Claims This Month</div>
+      <div class="knum" style="color:#0f9b8a" id="kpi-claims">42,318</div>
+      <div class="ksub" id="kpi-claims-sub">Across 6 clinics &middot; all providers</div>
+      <div class="ktag inf" id="kpi-claims-tag">&#9650; 3.2% vs same period last month</div>
+    </div>
+    <div class="card"><div class="stripe g"></div>
+      <div class="cl g">Network Compliance Score</div>
+      <div class="knum" style="color:#22c55e" id="kpi-score">94<span style="font-size:1.3rem">%</span></div>
+      <div class="ksub" id="kpi-score-sub">vs MBS rules &amp; national peer benchmark</div>
+      <div class="ktag up" id="kpi-score-tag">&#9650; Above peer cohort avg of 89%</div>
+    </div>
+    <div class="card"><div class="stripe a"></div>
+      <div class="cl a">Provider Review Risk</div>
+      <div class="knum" style="color:#d97706" id="kpi-risk">2</div>
+      <div class="ksub" id="kpi-risk-sub">Providers above peer threshold</div>
+      <div class="ktag wrn" id="kpi-risk-tag">Action recommended this week</div>
+    </div>
+    <div class="card"><div class="stripe r"></div>
+      <div class="cl r">Open Audit Findings</div>
+      <div class="knum" style="color:#dc2626" id="kpi-findings">7</div>
+      <div class="ksub" id="kpi-findings-sub">5 in remediation &middot; 2 pending sign-off</div>
+      <div class="ktag dn" id="kpi-findings-tag">3 new since Monday</div>
+    </div>
+  </div>
+
+  <div class="g2 mb">
+    <div class="card"><div class="stripe r"></div>
+      <div class="cl r">Priority Alerts &mdash; Action Required Today</div>
+      <div class="al">
+        <div class="al-pip" style="background:var(--red)"></div>
+        <div class="al-body">
+          <div class="al-t">Dr M. Patel &mdash; Item 36 at 340% of peer average</div>
+          <div class="al-d">61% of all consultations billed as long (&ge;20 min). National peer is 20%. Justification pack pre-assembled, awaiting principal sign-off.</div>
+        </div>
+        <div class="al-ts">HIGH RISK<br><span onclick="provDrill('patel')" style="color:#0f9b8a;cursor:pointer;font-size:.49rem">Drill in &rarr;</span></div>
+      </div>
+      <div class="al">
+        <div class="al-pip" style="background:var(--red)"></div>
+        <div class="al-body">
+          <div class="al-t">Dr A. Whittaker &mdash; Item 44 after-hours at 182% of peer + 3 timestamp issues</div>
+          <div class="al-d">14% after-hours billings vs 8% peer. Timestamp validation found 3 consultations inside ordinary hours billed as Item 44. Directly provable finding.</div>
+        </div>
+        <div class="al-ts">HIGH RISK<br><span onclick="provDrill('whittaker')" style="color:#0f9b8a;cursor:pointer;font-size:.49rem">Drill in &rarr;</span></div>
+      </div>
+      <div class="al">
+        <div class="al-pip" style="background:var(--amber)"></div>
+        <div class="al-body">
+          <div class="al-t">Dr S. Khan &mdash; Item 23/36 ratio inverted</div>
+          <div class="al-d">47% Item 36 vs network avg 20%. Low Item 23 + high Item 36 is the classic Services Australia data-matching trigger. Internal review recommended.</div>
+        </div>
+        <div class="al-ts">ELEVATED<br><span onclick="provDrill('khan')" style="color:#0f9b8a;cursor:pointer;font-size:.49rem">Drill in &rarr;</span></div>
+      </div>
+      <div class="al">
+        <div class="al-pip" style="background:var(--amber)"></div>
+        <div class="al-body">
+          <div class="al-t">Item 721 CDM &mdash; network creation rate below capacity</div>
+          <div class="al-d">CDM plan creation 4.2% vs estimated potential 8&ndash;12%. Approximately <strong style="color:#d97706">$82,000 in uncaptured legitimate Medicare revenue</strong> per year.</div>
+        </div>
+        <div class="al-ts">REVIEW<br><span onclick="show('cdm')" style="color:#0f9b8a;cursor:pointer;font-size:.49rem">View &rarr;</span></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card mb"><div class="stripe c"></div>
+        <div class="cl c">Medicare Revenue Split &mdash; This Month</div>
+        <div style="margin-top:.45rem">
+          <div class="pb-w"><div class="pb-l"><span>Item 23 &mdash; Standard consultations</span><span>$1.24M &middot; 38%</span></div><div class="pb"><div class="pf pc" style="width:82%"></div></div></div>
+          <div class="pb-w"><div class="pb-l"><span>Item 36 &mdash; Long consultations</span><span>$890K &middot; 27%</span></div><div class="pb"><div class="pf pa" style="width:65%"></div></div></div>
+          <div class="pb-w"><div class="pb-l"><span>Item 44 &mdash; After-hours</span><span>$224K &middot; 7%</span></div><div class="pb"><div class="pf pa" style="width:32%"></div></div></div>
+          <div class="pb-w"><div class="pb-l"><span>Telehealth 91890</span><span>$196K &middot; 6%</span></div><div class="pb"><div class="pf pc" style="width:28%"></div></div></div>
+          <div class="pb-w"><div class="pb-l"><span>CDM / Allied (721/723/701)</span><span>$148K &middot; 5%</span></div><div class="pb"><div class="pf pg" style="width:22%"></div></div></div>
+          <div class="pb-w"><div class="pb-l"><span>Other MBS items</span><span>$556K &middot; 17%</span></div><div class="pb"><div class="pf pc" style="width:48%"></div></div></div>
+        </div>
+        <div style="text-align:right;font-family:var(--mono);font-size:.54rem;color:#475569;margin-top:.45rem">Total: <strong style="color:#1a2535">$3.26M</strong> Medicare benefits this month</div>
+      </div>
+      <div class="card"><div class="stripe g"></div>
+        <div class="cl g">Pracsoft Feed Status</div>
+        <div style="margin-top:.38rem;display:flex;flex-direction:column;gap:.3rem">
+          <div style="display:flex;justify-content:space-between;font-size:.7rem"><span><span class="sdot" style="background:var(--green2)"></span>Claim feed &middot; all 6 clinics</span><span style="font-family:var(--mono);font-size:.54rem;color:#22c55e">Live &middot; 47s ago</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.7rem"><span><span class="sdot" style="background:var(--green2)"></span>Provider register</span><span style="font-family:var(--mono);font-size:.54rem;color:#22c55e">Updated 08:00 today</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.7rem"><span><span class="sdot" style="background:var(--green2)"></span>Appointment metadata</span><span style="font-family:var(--mono);font-size:.54rem;color:#22c55e">Synced</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.7rem"><span><span class="sdot" style="background:var(--amber)"></span>Clinic 5 (Eastside)</span><span style="font-family:var(--mono);font-size:.54rem;color:#d97706">Delayed 12 min</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.7rem"><span><span class="sdot" style="background:var(--green2)"></span>MBS rule library</span><span style="font-family:var(--mono);font-size:.54rem;color:#22c55e">1 Nov 2025 schedule applied</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.7rem"><span><span class="sdot" style="background:var(--green2)"></span>Read-only &middot; no Pracsoft write-back</span><span style="font-family:var(--mono);font-size:.54rem;color:#22c55e">Confirmed</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ai">
+    <div class="ai-ico">&#9672;</div>
+    <div class="ai-b">
+      <div class="ai-tag">IntelliSense AI &middot; Network Executive Summary &mdash; Today</div>
+      <div class="ai-txt"><strong>42,318 claims totalling $3.26M in Medicare benefits</strong> this month. Overall compliance score 94% &mdash; above the peer cohort average of 89%. Two providers need priority attention this week: <strong>Dr Patel (Item 36 at 340% of peer)</strong> and <strong>Dr Whittaker (Item 44 timestamp issues)</strong>. Clinical justification packs are pre-assembled for both and ready for practice principal review. The Item 23/36 ratio inversion at Eastside Clinic warrants a scoped internal audit &mdash; estimated exposure if a Provider Review were initiated: approximately <strong>$48,000</strong>. CDM plan underutilisation represents an estimated <strong>$82,000 in uncaptured legitimate Medicare revenue</strong> annually. No duplicate claims detected this month. No co-claim rule violations detected.</div>
+      <button class="ai-act" onclick="show('audit')">&#8594; Schedule internal audit now</button>
+    </div>
+  </div>
+
+  <div class="sh" style="margin-top:1.4rem">Provider Risk Register &mdash; All Providers</div>
+  <div style="background:#ffffff;border:1px solid #dde2ea">
+    <table class="dt">
+      <thead><tr><th>Provider</th><th>Clinic</th><th>Prov No.</th><th>Item Flagged</th><th>vs Peer</th><th>30d Claims</th><th>Risk</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+        <tr class="cr" onclick="provDrill('patel')"><td class="dm">Dr M. Patel</td><td>Riverside</td><td class="dmo">2847291J</td><td><span class="dmo">Item 36</span></td><td style="color:#dc2626;font-weight:600">+340%</td><td>612</td><td><span class="bdg br">High Risk</span></td><td>Justification pack ready</td><td style="color:#0f9b8a;font-family:var(--mono);font-size:.5rem">&rarr;</td></tr>
+        <tr class="cr" onclick="provDrill('whittaker')"><td class="dm">Dr A. Whittaker</td><td>City North</td><td class="dmo">3192847K</td><td><span class="dmo">Item 44</span></td><td style="color:#d97706;font-weight:600">+182%</td><td>247</td><td><span class="bdg ba">Elevated</span></td><td>Internal review scheduled</td><td style="color:#0f9b8a;font-family:var(--mono);font-size:.5rem">&rarr;</td></tr>
+        <tr class="cr" onclick="provDrill('khan')"><td class="dm">Dr S. Khan</td><td>Eastside</td><td class="dmo">2710384B</td><td><span class="dmo">23/36 Ratio</span></td><td style="color:#d97706;font-weight:600">Inverted</td><td>418</td><td><span class="bdg ba">Elevated</span></td><td>Pattern monitoring</td><td style="color:#0f9b8a;font-family:var(--mono);font-size:.5rem">&rarr;</td></tr>
+        <tr class="cr" onclick="provDrill('nguyen')"><td class="dm">Dr L. Nguyen</td><td>Westfield</td><td class="dmo">3408291M</td><td><span class="dmo">Item 721</span></td><td style="color:#0f9b8a;font-weight:600">Within range</td><td>312</td><td><span class="bdg bb">Monitor</span></td><td>No action required</td><td style="color:#0f9b8a;font-family:var(--mono);font-size:.5rem">&rarr;</td></tr>
+        <tr><td class="dm">Dr R. Singh</td><td>Southside</td><td class="dmo">2916487P</td><td><span class="dmo">All items</span></td><td style="color:#22c55e">Normal</td><td>388</td><td><span class="bdg bg">Compliant</span></td><td>&mdash;</td><td></td></tr>
+        <tr><td class="dm">Dr T. Cole</td><td>Northgate</td><td class="dmo">3182847P</td><td><span class="dmo">All items</span></td><td style="color:#22c55e">Normal</td><td>351</td><td><span class="bdg bg">Compliant</span></td><td>&mdash;</td><td></td></tr>
+        <tr><td class="dm">Dr E. Park</td><td>Riverside</td><td class="dmo">2918374K</td><td><span class="dmo">All items</span></td><td style="color:#22c55e">Normal</td><td>298</td><td><span class="bdg bg">Compliant</span></td><td>&mdash;</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══ HEATMAP ══ -->
+<section class="panel" id="panel-heatmap">
+  <button class="help-btn" onclick="openHelpDrawer('heatmap')" title="Help with this panel">?</button>
+  <div class="phead">
+    <div>
+      <div class="ew">Item Number Intelligence</div>
+      <div class="ptitle">Network Item Heatmap</div>
+      <div class="psub">Every provider &middot; every MBS item &middot; vs national peer benchmark. Red = Provider Review territory. Click any provider row to open their full profile. Click any cell for detail.</div>
+    </div>
+    <div style="display:flex;gap:.4rem;align-items:center">
+      <select style="background:#f1f5f9;border:1px solid #dde2ea;color:#1a2535;font-family:var(--mono);font-size:.58rem;padding:.28rem .55rem"><option>All clinics</option><option>Riverside</option><option>City North</option><option>Eastside</option><option>Westfield</option></select>
+      <select style="background:#f1f5f9;border:1px solid #dde2ea;color:#1a2535;font-family:var(--mono);font-size:.58rem;padding:.28rem .55rem"><option>Last 30 days</option><option>Last 90 days</option><option>This year</option></select>
+    </div>
+  </div>
+  <div class="ai mb">
+    <div class="ai-ico">&#9672;</div>
+    <div class="ai-b">
+      <div class="ai-tag">IntelliSense &middot; Heatmap Reading</div>
+      <div class="ai-txt"><strong>2 providers flagged (red border).</strong> Dr Patel's Item 36 at 61% is 3&times; the Provider Review risk threshold &mdash; the highest Item 36 exposure on the network. Dr Khan's 47% Item 36 with a suppressed Item 23 creates the inverted ratio pattern that Services Australia's data-matching algorithms flag automatically. Remaining 5 GPs are within compliant range across all displayed items. Allied health billing patterns are all normal &mdash; no co-claim rule violations detected.</div>
+    </div>
+  </div>
+  <div style="background:#ffffff;border:1px solid #dde2ea;padding:1.1rem;overflow-x:auto">
+    <div class="hm" style="min-width:820px">
+      <div class="hm-cor"></div>
+      <div class="hm-ch">Item 3<br><small style="color:#475569;font-size:.44rem">Brief</small></div>
+      <div class="hm-ch">Item 23<br><small style="color:#475569;font-size:.44rem">Standard</small></div>
+      <div class="hm-ch">Item 36<br><small style="color:#475569;font-size:.44rem">Long &ge;20m</small></div>
+      <div class="hm-ch">Item 44<br><small style="color:#475569;font-size:.44rem">After-hrs</small></div>
+      <div class="hm-ch">Item 721<br><small style="color:#475569;font-size:.44rem">CDM Plan</small></div>
+      <div class="hm-ch">Item 723<br><small style="color:#475569;font-size:.44rem">Team Care</small></div>
+      <div class="hm-ch">Item 2713<br><small style="color:#475569;font-size:.44rem">Mental Hlth</small></div>
+      <div class="hm-ch">Tele 91890<br><small style="color:#475569;font-size:.44rem">Phone</small></div>
+      <div class="hm-ch">36/Peer<br><small style="color:#475569;font-size:.44rem">Risk ratio</small></div>
+
+      <div class="hm-rh al" onclick="provDrill('patel')">Dr M. Patel &uarr;</div>
+      <div class="hm-ce c0" onclick="cell('Item 3','Dr Patel','4%','Normal &mdash; 4% vs 5% peer average. No concern.')">4%</div>
+      <div class="hm-ce c1" onclick="cell('Item 23','Dr Patel','22%','Low &mdash; 22% vs 52% peer. Suppressed Item 23 is consistent with inflated Item 36 usage and amplifies the ratio risk.')">22%</div>
+      <div class="hm-ce c5" onclick="provDrill('patel')">61%</div>
+      <div class="hm-ce c1" onclick="cell('Item 44','Dr Patel','5%','Normal &mdash; 5% vs 8% peer. After-hours usage not a concern for this provider.')">5%</div>
+      <div class="hm-ce c2" onclick="cell('Item 721','Dr Patel','8%','Compliant &mdash; 8% vs 6% peer. CDM plan creation is above average, a positive indicator.')">8%</div>
+      <div class="hm-ce c2" onclick="cell('Item 723','Dr Patel','4%','Normal.')">4%</div>
+      <div class="hm-ce c1" onclick="cell('Item 2713','Dr Patel','3%','Normal.')">3%</div>
+      <div class="hm-ce c0" onclick="cell('Telehealth','Dr Patel','2%','Low telehealth usage. No concern.')">2%</div>
+      <div class="hm-ce c5">3.0&times;</div>
+
+      <div class="hm-rh fl" onclick="provDrill('whittaker')">Dr A. Whittaker &uarr;</div>
+      <div class="hm-ce c1">8%</div>
+      <div class="hm-ce c2">54%</div>
+      <div class="hm-ce c2">18%</div>
+      <div class="hm-ce c4" onclick="provDrill('whittaker')">14%</div>
+      <div class="hm-ce c1">3%</div>
+      <div class="hm-ce c1">1%</div>
+      <div class="hm-ce c2">7%</div>
+      <div class="hm-ce c1">5%</div>
+      <div class="hm-ce c1">0.9&times;</div>
+
+      <div class="hm-rh fl" onclick="provDrill('khan')">Dr S. Khan &uarr;</div>
+      <div class="hm-ce c0">2%</div>
+      <div class="hm-ce c3">31%</div>
+      <div class="hm-ce c4">47%</div>
+      <div class="hm-ce c1">6%</div>
+      <div class="hm-ce c2">7%</div>
+      <div class="hm-ce c1">3%</div>
+      <div class="hm-ce c2">5%</div>
+      <div class="hm-ce c2">8%</div>
+      <div class="hm-ce c3">2.4&times;</div>
+
+      <div class="hm-rh" onclick="provDrill('nguyen')">Dr L. Nguyen &uarr;</div>
+      <div class="hm-ce c2">11%</div>
+      <div class="hm-ce c2">58%</div>
+      <div class="hm-ce c2">19%</div>
+      <div class="hm-ce c1">7%</div>
+      <div class="hm-ce c2">6%</div>
+      <div class="hm-ce c2">3%</div>
+      <div class="hm-ce c1">2%</div>
+      <div class="hm-ce c1">4%</div>
+      <div class="hm-ce c1">1.0&times;</div>
+
+      <div class="hm-rh">Dr R. Singh</div>
+      <div class="hm-ce c2">9%</div><div class="hm-ce c2">62%</div><div class="hm-ce c1">14%</div>
+      <div class="hm-ce c2">9%</div><div class="hm-ce c2">5%</div><div class="hm-ce c2">3%</div>
+      <div class="hm-ce c2">6%</div><div class="hm-ce c1">2%</div><div class="hm-ce c1">0.7&times;</div>
+
+      <div class="hm-rh">Dr T. Cole</div>
+      <div class="hm-ce c1">6%</div><div class="hm-ce c2">51%</div><div class="hm-ce c2">22%</div>
+      <div class="hm-ce c2">10%</div><div class="hm-ce c2">7%</div><div class="hm-ce c2">4%</div>
+      <div class="hm-ce c1">2%</div><div class="hm-ce c1">3%</div><div class="hm-ce c1">1.1&times;</div>
+
+      <div class="hm-rh">Dr E. Park</div>
+      <div class="hm-ce c0">3%</div><div class="hm-ce c2">56%</div><div class="hm-ce c2">21%</div>
+      <div class="hm-ce c2">8%</div><div class="hm-ce c2">5%</div><div class="hm-ce c1">2%</div>
+      <div class="hm-ce c2">4%</div><div class="hm-ce c2">7%</div><div class="hm-ce c1">0.8&times;</div>
+
+      <div class="hm-rh net">Network avg</div>
+      <div class="hm-ce c1" style="font-weight:700">5%</div>
+      <div class="hm-ce c2" style="font-weight:700">52%</div>
+      <div class="hm-ce c2" style="font-weight:700">20%</div>
+      <div class="hm-ce c1" style="font-weight:700">8%</div>
+      <div class="hm-ce c2" style="font-weight:700">6%</div>
+      <div class="hm-ce c1" style="font-weight:700">3%</div>
+      <div class="hm-ce c2" style="font-weight:700">4%</div>
+      <div class="hm-ce c1" style="font-weight:700">4%</div>
+      <div class="hm-ce" style="background:rgba(13,122,108,.05);color:#0f9b8a;font-weight:700">1.0&times;</div>
+    </div>
+    <div class="hm-leg">
+      <div class="hm-li"><span class="hm-sw c0"></span>Very low / not used</div>
+      <div class="hm-li"><span class="hm-sw c1"></span>Within range</div>
+      <div class="hm-li"><span class="hm-sw c2"></span>Compliant &mdash; peer benchmark</div>
+      <div class="hm-li"><span class="hm-sw c3"></span>Watch &mdash; elevated</div>
+      <div class="hm-li"><span class="hm-sw c4"></span>Elevated &mdash; review recommended</div>
+      <div class="hm-li"><span class="hm-sw c5"></span>Critical &mdash; Provider Review risk</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROVIDERS ══ -->
+<section class="panel" id="panel-providers">
+  <div class="phead">
+    <div>
+      <div class="ew">Provider Oversight</div>
+      <div class="ptitle">All Providers</div>
+      <div class="psub">24 GPs + 8 allied health &middot; Click any row for full consultation-level drilldown &middot; Allied health billing validated against GP referral records from Pracsoft</div>
+    </div>
+  </div>
+  <div style="background:#ffffff;border:1px solid #dde2ea">
+    <table class="dt">
+      <thead><tr><th>Provider</th><th>Role</th><th>Clinic</th><th>Prov No.</th><th>30d Claims</th><th>Top Item</th><th>vs Peer</th><th>Risk</th><th></th></tr></thead>
+      <tbody>
+        <tr class="cr" onclick="provDrill('patel')"><td class="dm">Dr M. Patel</td><td>GP</td><td>Riverside</td><td class="dmo">2847291J</td><td>612</td><td>Item 36 (61%)</td><td style="color:#dc2626">+340%</td><td><span class="bdg br">High</span></td><td style="color:#0f9b8a;font-family:var(--mono);font-size:.5rem">&rarr;</td></tr>
+        <tr class="cr" onclick="provDrill('whittaker')"><td class="dm">Dr A. Whittaker</td><td>GP</td><td>City North</td><td class="dmo">3192847K</td><td>247</td><td>Item 44 (14%)</td><td style="color:#d97706">+182%</td><td><span class="bdg ba">Elevated</span></td><td style="color:#0f9b8a;font-family:var(--mono);font-size:.5rem">&rarr;</td></tr>
+        <tr class="cr" onclick="provDrill('khan')"><td class="dm">Dr S. Khan</td><td>GP</td><td>Eastside</td><td class="dmo">2710384B</td><td>418</td><td>Item 36 (47%)</td><td style="color:#d97706">Inverted</td><td><span class="bdg ba">Elevated</span></td><td style="color:#0f9b8a;font-family:var(--mono);font-size:.5rem">&rarr;</td></tr>
+        <tr class="cr" onclick="provDrill('nguyen')"><td class="dm">Dr L. Nguyen</td><td>GP</td><td>Westfield</td><td class="dmo">3408291M</td><td>312</td><td>Item 23 (58%)</td><td style="color:#0f9b8a">Normal</td><td><span class="bdg bb">Monitor</span></td><td style="color:#0f9b8a;font-family:var(--mono);font-size:.5rem">&rarr;</td></tr>
+        <tr><td class="dm">Dr R. Singh</td><td>GP</td><td>Southside</td><td class="dmo">2916487P</td><td>388</td><td>Item 23 (62%)</td><td style="color:#22c55e">Normal</td><td><span class="bdg bg">Clear</span></td><td></td></tr>
+        <tr><td class="dm">Dr T. Cole</td><td>GP</td><td>Northgate</td><td class="dmo">3182847P</td><td>351</td><td>Item 23 (51%)</td><td style="color:#22c55e">Normal</td><td><span class="bdg bg">Clear</span></td><td></td></tr>
+        <tr><td class="dm">Dr E. Park</td><td>GP</td><td>Riverside</td><td class="dmo">2918374K</td><td>298</td><td>Item 23 (56%)</td><td style="color:#22c55e">Normal</td><td><span class="bdg bg">Clear</span></td><td></td></tr>
+        <tr><td colspan="9" style="padding:.55rem .68rem;font-family:var(--mono);font-size:.5rem;color:#6b7a8d;letter-spacing:.06em;text-transform:uppercase;background:rgba(124,58,237,.04)">Allied Health Practitioners &mdash; 8 active &middot; All AHPRA/DAA/ESSA current &middot; Billing validated against GP referral records</td></tr>
+        <tr class="cr" onclick="show('allied')"><td class="dm">Sarah Mitchell</td><td style="color:#a78bfa">Physiotherapist</td><td>Riverside, Caringbah</td><td class="dmo">PHY0001884</td><td>142</td><td>WC / TAC / MBS 10960</td><td style="color:#22c55e">Normal</td><td><span class="bdg bg">Clear</span></td><td style="color:#0f9b8a;font-family:var(--mono);font-size:.5rem">&rarr;</td></tr>
+        <tr class="cr" onclick="show('allied')"><td class="dm">Rohini Patel</td><td style="color:#a78bfa">Dietitian (APD)</td><td>Hurstville, Caringbah</td><td class="dmo">DAA-APD</td><td>88</td><td>MBS CDP 701</td><td style="color:#22c55e">Normal</td><td><span class="bdg bg">Clear</span></td><td style="color:#0f9b8a;font-family:var(--mono);font-size:.5rem">&rarr;</td></tr>
+        <tr class="cr" onclick="show('allied')"><td class="dm">Sola Okonkwo</td><td style="color:#a78bfa">Psychologist</td><td>Fairfield</td><td class="dmo">PSY0002881</td><td>76</td><td>MHTP 80110</td><td style="color:#22c55e">Normal</td><td><span class="bdg ba">CPD Due</span></td><td style="color:#0f9b8a;font-family:var(--mono);font-size:.5rem">&rarr;</td></tr>
+        <tr class="cr" onclick="show('allied')"><td class="dm">Thomas Crawford</td><td style="color:#a78bfa">OT</td><td>All centres</td><td class="dmo">OCC0001554</td><td>54</td><td>WC FCE / NDIS</td><td style="color:#22c55e">Normal</td><td><span class="bdg bg">Clear</span></td><td style="color:#0f9b8a;font-family:var(--mono);font-size:.5rem">&rarr;</td></tr>
+        <tr class="cr" onclick="show('allied')"><td class="dm">Luc Dubois</td><td style="color:#a78bfa">Podiatrist</td><td>Hurstville</td><td class="dmo">POD0002217</td><td>62</td><td>MBS 10962/10964</td><td style="color:#22c55e">Normal</td><td><span class="bdg bg">Clear</span></td><td style="color:#0f9b8a;font-family:var(--mono);font-size:.5rem">&rarr;</td></tr>
+        <tr class="cr" onclick="show('allied')"><td class="dm">James Baxter</td><td style="color:#a78bfa">Exercise Physiologist</td><td>Fairfield</td><td class="dmo">ESSA-AEP</td><td>38</td><td>TAC / WC RTW / MBS</td><td style="color:#22c55e">Normal</td><td><span class="bdg bg">Clear</span></td><td style="color:#0f9b8a;font-family:var(--mono);font-size:.5rem">&rarr;</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══ AUDIT ══ -->
+<section class="panel" id="panel-audit">
+  <button class="help-btn" onclick="openHelpDrawer('audit')" title="Help with this panel">?</button>
+  <div class="phead">
+    <div>
+      <div class="ew">Internal Audit Workflow</div>
+      <div class="ptitle">Audit Centre</div>
+      <div class="psub">Work through the Dr Patel Item 36 audit live &mdash; scope, risk-weighted sample, claim-by-claim review, remediation, and principal sign-off. Generates a board-ready PDF on completion.</div>
+    </div>
+    <button class="btn btn-c btn-sm" onclick="startNewAudit()">+ New Audit</button>
+  </div>
+
+  <div style="display:flex;gap:0;margin-bottom:1.1rem;border:1px solid #dde2ea;border-radius:6px;overflow:hidden">
+    <div class="audit-step-tab on" id="atab-1" onclick="goAuditStep(1)"><div class="ast-num">1</div><div class="ast-label">Scope</div></div>
+    <div class="audit-step-tab" id="atab-2" onclick="goAuditStep(2)"><div class="ast-num">2</div><div class="ast-label">Sample</div></div>
+    <div class="audit-step-tab" id="atab-3" onclick="goAuditStep(3)"><div class="ast-num">3</div><div class="ast-label">Review</div></div>
+    <div class="audit-step-tab" id="atab-4" onclick="goAuditStep(4)"><div class="ast-num">4</div><div class="ast-label">Remediate</div></div>
+    <div class="audit-step-tab" id="atab-5" onclick="goAuditStep(5)"><div class="ast-num">5</div><div class="ast-label">Sign-off</div></div>
+  </div>
+
+  <!-- Step 1 -->
+  <div id="audit-step-1" class="audit-step-content">
+    <div class="sh" style="margin-bottom:.6rem">Step 1 &mdash; Define Audit Scope</div>
+    <div class="g2" style="margin-bottom:.9rem">
+      <div class="card" style="cursor:pointer;border:2px solid #0d7a6c" id="atype-provider" onclick="selectAuditType(this)">
+        <div class="stripe c"></div><div class="cl c">&#9888; Provider Item Review</div>
+        <div style="font-size:.74rem;color:#475569;margin:.3rem 0 .5rem">Target: Dr M. Patel &mdash; Item 36 (long consultation). Pre-selected based on compliance flag.</div>
+        <div style="font-family:var(--mono);font-size:.55rem;color:#0d7a6c">&#10003; SELECTED</div>
+      </div>
+      <div class="card" style="cursor:pointer" id="atype-network" onclick="selectAuditType(this)">
+        <div class="stripe g"></div><div class="cl g">&#9675; Full Network Audit</div>
+        <div style="font-size:.74rem;color:#475569;margin:.3rem 0 .5rem">All providers &middot; All items &middot; Full 90-day period. Recommended for quarterly board reporting.</div>
+        <div style="font-family:var(--mono);font-size:.55rem;color:#6b7a8d">Click to select</div>
+      </div>
+    </div>
+    <div style="background:#f8fafc;border:1px solid #dde2ea;border-radius:6px;padding:.85rem 1rem;margin-bottom:.8rem">
+      <div class="sh" style="margin-bottom:.55rem">Audit parameters</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem;font-size:.74rem">
+        <div><div style="font-family:var(--mono);font-size:.5rem;color:#6b7a8d;margin-bottom:.2rem">PROVIDER</div><div style="font-weight:600;color:#1a2535">Dr M. Patel</div><div style="color:#475569">Riverside Clinic</div></div>
+        <div><div style="font-family:var(--mono);font-size:.5rem;color:#6b7a8d;margin-bottom:.2rem">ITEM FOCUS</div><div style="font-weight:600;color:#dc2626">Item 36</div><div style="color:#475569">Long consult (&ge;20 min)</div></div>
+        <div><div style="font-family:var(--mono);font-size:.5rem;color:#6b7a8d;margin-bottom:.2rem">DATE RANGE</div><div style="font-weight:600;color:#1a2535">01 Feb &mdash; 31 May 2026</div><div style="color:#475569">4-month window</div></div>
+        <div><div style="font-family:var(--mono);font-size:.5rem;color:#6b7a8d;margin-bottom:.2rem">SAMPLE SIZE</div><div style="font-weight:600;color:#1a2535">25 consultations</div><div style="color:#475569">Risk-weighted selection</div></div>
+        <div><div style="font-family:var(--mono);font-size:.5rem;color:#6b7a8d;margin-bottom:.2rem">TRIGGER</div><div style="font-weight:600;color:#dc2626">Peer flag</div><div style="color:#475569">61% vs 20% peer</div></div>
+        <div><div style="font-family:var(--mono);font-size:.5rem;color:#6b7a8d;margin-bottom:.2rem">REVIEWER</div><div style="font-weight:600;color:#1a2535">Practice Principal</div><div style="color:#475569">Dr Sarah Chen, MBBS</div></div>
+      </div>
+    </div>
+    <button class="btn btn-c" onclick="goAuditStep(2)">Confirm Scope &amp; Generate Sample &rarr;</button>
+  </div>
+
+  <!-- Step 2 -->
+  <div id="audit-step-2" class="audit-step-content" style="display:none">
+    <div class="sh" style="margin-bottom:.6rem">Step 2 &mdash; Risk-Weighted Sample</div>
+    <div class="ai" style="margin-bottom:.8rem">
+      <div class="ai-ico">&#9672;</div>
+      <div class="ai-b">
+        <div class="ai-tag">MedicalGuard &middot; Sample Selection Engine</div>
+        <div class="ai-txt">25-consultation sample from 373 Item 36 billings (Feb&ndash;May 2026). Weighted toward highest-risk: short Pracsoft slots (&lt;20 min), walk-in appointments billed as long consults, repeat Item 36 same patient within 30 days. Control set of 6 compliant consults included.</div>
+      </div>
+    </div>
+    <div style="background:#ffffff;border:1px solid #dde2ea;margin-bottom:.8rem">
+      <table class="dt">
+        <thead><tr><th>#</th><th>Date</th><th>Item</th><th>Duration (Pracsoft)</th><th>Appt Type</th><th>Risk</th><th>Sample Reason</th></tr></thead>
+        <tbody>
+          <tr><td class="dm">01</td><td>12 May</td><td style="color:#22c55e">Item 36</td><td>22 min</td><td>Long consult</td><td><span class="bdg bg">Low</span></td><td>Control sample</td></tr>
+          <tr><td class="dm">02</td><td>11 May</td><td style="color:#dc2626">Item 36</td><td style="color:#dc2626;font-weight:600">14 min &#9888;</td><td>Standard slot</td><td><span class="bdg br">High</span></td><td>Duration below threshold</td></tr>
+          <tr><td class="dm">03</td><td>10 May</td><td style="color:#22c55e">Item 36</td><td>28 min</td><td>Long consult</td><td><span class="bdg bg">Low</span></td><td>Control sample</td></tr>
+          <tr><td class="dm">04</td><td>09 May</td><td style="color:#d97706">Item 36</td><td style="color:#d97706;font-weight:600">17 min &#9888;</td><td>Walk-in</td><td><span class="bdg br">High</span></td><td>Walk-in + short duration</td></tr>
+          <tr><td class="dm">05</td><td>08 May</td><td style="color:#22c55e">Item 36</td><td>24 min</td><td>Long consult</td><td><span class="bdg bg">Low</span></td><td>Control sample</td></tr>
+          <tr><td class="dm">06</td><td>07 May</td><td style="color:#dc2626">Item 36</td><td style="color:#dc2626;font-weight:600">13 min &#9888;</td><td>Standard slot</td><td><span class="bdg br">High</span></td><td>3rd Item 36 same patient / 30 days</td></tr>
+          <tr><td class="dm" colspan="7" style="color:#6b7a8d;font-style:italic">+ 19 more consultations in sample &mdash; proceed to review</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn btn-c" onclick="goAuditStep(3)">Begin Claim-by-Claim Review &rarr;</button>
+  </div>
+
+  <!-- Step 3 -->
+  <div id="audit-step-3" class="audit-step-content" style="display:none">
+    <div class="sh" style="margin-bottom:.3rem">Step 3 &mdash; Claim Review</div>
+    <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.7rem">
+      <div style="font-size:.74rem;color:#475569">Progress: <strong id="audit-progress-text" style="color:#1a2535">0 of 6 reviewed</strong></div>
+      <div style="flex:1;height:6px;background:#eef2f7;border-radius:3px"><div id="audit-progress-bar" style="height:100%;background:#0d7a6c;border-radius:3px;transition:width .3s;width:0%"></div></div>
+      <div style="font-family:var(--mono);font-size:.5rem;color:#0d7a6c" id="audit-progress-pct">0%</div>
+    </div>
+    <div id="audit-claims-list">
+      <div class="cr-row" id="aclaim-0" style="cursor:pointer" onclick="reviewClaim(0)"><div class="cr-dt">12 May<br>2026</div><div class="cr-it" style="color:#22c55e">Item 36</div><div class="cr-b"><div class="cr-title">Dr M. Patel &middot; Riverside &middot; Duration: 22 min</div><div class="cr-desc">Established patient &middot; Complex multi-morbidity review. 30-min slot booked. Click to mark verdict.</div></div><div id="aclaim-0-verdict"><span class="bdg">Pending</span></div></div>
+      <div class="cr-row" id="aclaim-1" style="cursor:pointer" onclick="reviewClaim(1)"><div class="cr-dt">11 May<br>2026</div><div class="cr-it" style="color:#dc2626">Item 36 &#9888;</div><div class="cr-b"><div class="cr-title">Dr M. Patel &middot; Riverside &middot; Duration: 14 min &#9888;</div><div class="cr-desc">Duration 14 min &mdash; below 20-min threshold. Standard 15-min slot. 3rd Item 36 same patient / 30 days. Click to mark verdict.</div></div><div id="aclaim-1-verdict"><span class="bdg">Pending</span></div></div>
+      <div class="cr-row" id="aclaim-2" style="cursor:pointer" onclick="reviewClaim(2)"><div class="cr-dt">10 May<br>2026</div><div class="cr-it" style="color:#22c55e">Item 36</div><div class="cr-b"><div class="cr-title">Dr M. Patel &middot; Riverside &middot; Duration: 28 min</div><div class="cr-desc">New patient &middot; Comprehensive initial assessment &middot; Long consult booked. Click to mark verdict.</div></div><div id="aclaim-2-verdict"><span class="bdg">Pending</span></div></div>
+      <div class="cr-row" id="aclaim-3" style="cursor:pointer" onclick="reviewClaim(3)"><div class="cr-dt">09 May<br>2026</div><div class="cr-it" style="color:#d97706">Item 36 &#9888;</div><div class="cr-b"><div class="cr-title">Dr M. Patel &middot; Riverside &middot; Duration: 17 min &#9888;</div><div class="cr-desc">Duration 17 min &mdash; below threshold. Walk-in, script renewal per notes. Click to mark verdict.</div></div><div id="aclaim-3-verdict"><span class="bdg">Pending</span></div></div>
+      <div class="cr-row" id="aclaim-4" style="cursor:pointer" onclick="reviewClaim(4)"><div class="cr-dt">08 May<br>2026</div><div class="cr-it" style="color:#22c55e">Item 36</div><div class="cr-b"><div class="cr-title">Dr M. Patel &middot; Riverside &middot; Duration: 24 min</div><div class="cr-desc">Annual health assessment &middot; Complex patient &middot; Long consult booked. Click to mark verdict.</div></div><div id="aclaim-4-verdict"><span class="bdg">Pending</span></div></div>
+      <div class="cr-row" id="aclaim-5" style="cursor:pointer" onclick="reviewClaim(5)"><div class="cr-dt">07 May<br>2026</div><div class="cr-it" style="color:#dc2626">Item 36 &#9888;</div><div class="cr-b"><div class="cr-title">Dr M. Patel &middot; Riverside &middot; Duration: 13 min &#9888;</div><div class="cr-desc">Well below threshold. Same patient as 11 May. Third Item 36 in 30 days. Click to mark verdict.</div></div><div id="aclaim-5-verdict"><span class="bdg">Pending</span></div></div>
+    </div>
+    <div id="audit-step3-next" style="display:none;margin-top:.7rem">
+      <button class="btn btn-c" onclick="goAuditStep(4)">Review Complete &mdash; Assign Remediation &rarr;</button>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div id="audit-step-4" class="audit-step-content" style="display:none">
+    <div class="sh" style="margin-bottom:.6rem">Step 4 &mdash; Remediation Actions</div>
+    <div style="font-size:.74rem;color:#475569;margin-bottom:.8rem">3 findings require remediation. Assign an action and MedicalGuard tracks completion.</div>
+    <div class="card" style="margin-bottom:.6rem;border-left:3px solid #dc2626">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.45rem"><div><div style="font-size:.8rem;font-weight:600;color:#1a2535">Finding 1 &mdash; 11 May &middot; Item 36 &middot; 14 min</div><div style="font-size:.72rem;color:#475569;margin-top:.15rem">Duration below threshold. Standard slot. No documented clinical complexity.</div></div><span class="bdg br">Non-compliant</span></div>
+      <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+        <div style="font-family:var(--mono);font-size:.5rem;color:#6b7a8d">ACTION:</div>
+        <button class="btn btn-sm" id="rem1-rebill" onclick="setRemediation(1,'rebill')" style="font-size:.65rem">Rebill as Item 23</button>
+        <button class="btn btn-sm" id="rem1-justify" onclick="setRemediation(1,'justify')" style="font-size:.65rem">Clinical justification</button>
+        <button class="btn btn-sm" id="rem1-education" onclick="setRemediation(1,'education')" style="font-size:.65rem">Provider education</button>
+        <div id="rem1-done" style="display:none;color:#16a34a;font-size:.72rem;font-weight:600">&#10003; Action assigned</div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:.6rem;border-left:3px solid #d97706">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.45rem"><div><div style="font-size:.8rem;font-weight:600;color:#1a2535">Finding 2 &mdash; 09 May &middot; Item 36 &middot; 17 min</div><div style="font-size:.72rem;color:#475569;margin-top:.15rem">Borderline below threshold. Walk-in, script renewal only per notes.</div></div><span class="bdg ba">Watch</span></div>
+      <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+        <div style="font-family:var(--mono);font-size:.5rem;color:#6b7a8d">ACTION:</div>
+        <button class="btn btn-sm" id="rem2-rebill" onclick="setRemediation(2,'rebill')" style="font-size:.65rem">Rebill as Item 23</button>
+        <button class="btn btn-sm" id="rem2-monitor" onclick="setRemediation(2,'monitor')" style="font-size:.65rem">Flag for monitoring</button>
+        <button class="btn btn-sm" id="rem2-education" onclick="setRemediation(2,'education')" style="font-size:.65rem">Provider education</button>
+        <div id="rem2-done" style="display:none;color:#16a34a;font-size:.72rem;font-weight:600">&#10003; Action assigned</div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:.6rem;border-left:3px solid #dc2626">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.45rem"><div><div style="font-size:.8rem;font-weight:600;color:#1a2535">Finding 3 &mdash; 07 May &middot; Item 36 &middot; 13 min</div><div style="font-size:.72rem;color:#475569;margin-top:.15rem">Well below threshold. Same patient as Finding 1. Pattern concern.</div></div><span class="bdg br">Non-compliant</span></div>
+      <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+        <div style="font-family:var(--mono);font-size:.5rem;color:#6b7a8d">ACTION:</div>
+        <button class="btn btn-sm" id="rem3-rebill" onclick="setRemediation(3,'rebill')" style="font-size:.65rem">Rebill as Item 23</button>
+        <button class="btn btn-sm" id="rem3-review" onclick="setRemediation(3,'review')" style="font-size:.65rem">Clinical record review</button>
+        <button class="btn btn-sm" id="rem3-education" onclick="setRemediation(3,'education')" style="font-size:.65rem">Provider education</button>
+        <div id="rem3-done" style="display:none;color:#16a34a;font-size:.72rem;font-weight:600">&#10003; Action assigned</div>
+      </div>
+    </div>
+    <button class="btn btn-c" id="audit-step4-next" onclick="goAuditStep(5)" style="display:none">Proceed to Principal Sign-off &rarr;</button>
+  </div>
+
+  <!-- Step 5 -->
+  <div id="audit-step-5" class="audit-step-content" style="display:none">
+    <div class="sh" style="margin-bottom:.6rem">Step 5 &mdash; Principal Sign-off &amp; Report Generation</div>
+    <div class="g2" style="margin-bottom:.9rem">
+      <div style="background:#f8fafc;border:1px solid #dde2ea;border-radius:6px;padding:.85rem 1rem">
+        <div class="sh" style="margin-bottom:.6rem">Audit Summary</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.45rem;font-size:.74rem">
+          <div><span style="color:#6b7a8d">Provider:</span> <strong>Dr M. Patel</strong></div>
+          <div><span style="color:#6b7a8d">Audit type:</span> <strong>Item 36 Review</strong></div>
+          <div><span style="color:#6b7a8d">Date range:</span> <strong>Feb &ndash; May 2026</strong></div>
+          <div><span style="color:#6b7a8d">Sample size:</span> <strong>25 consultations</strong></div>
+          <div><span style="color:#6b7a8d">Compliant:</span> <strong style="color:#16a34a">3 of 6 (demo)</strong></div>
+          <div><span style="color:#6b7a8d">Findings:</span> <strong style="color:#dc2626">3 findings</strong></div>
+          <div><span style="color:#6b7a8d">Reference:</span> <strong>MG-AUD-2026-047</strong></div>
+          <div><span style="color:#6b7a8d">Remediation:</span> <strong>All assigned</strong></div>
+        </div>
+      </div>
+      <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:6px;padding:.85rem 1rem">
+        <div class="sh" style="margin-bottom:.6rem;color:#166534">Practice Principal Sign-off</div>
+        <div style="font-size:.74rem;color:#475569;margin-bottom:.6rem">By signing, the principal confirms this audit was conducted in accordance with MedicalGuard methodology.</div>
+        <div style="margin-bottom:.5rem"><input type="text" id="signoff-name" placeholder="Principal name (e.g. Dr Sarah Chen)" style="width:100%;padding:.35rem .5rem;border:1px solid #dde2ea;border-radius:4px;font-size:.74rem;color:#1a2535;background:#fff"></div>
+        <div style="margin-bottom:.6rem"><input type="date" id="signoff-date" style="padding:.35rem .5rem;border:1px solid #dde2ea;border-radius:4px;font-size:.74rem;color:#1a2535;background:#fff" value="2026-05-22"></div>
+        <button class="btn btn-c" style="width:100%" id="signoff-btn" onclick="completeAudit()">&#10003; Sign &amp; Complete Audit</button>
+      </div>
+    </div>
+    <div id="audit-complete-block" style="display:none">
+      <div style="background:#f0fdf4;border:2px solid #22c55e;border-radius:8px;padding:1.2rem;text-align:center;margin-bottom:.9rem">
+        <div style="font-size:2rem;margin-bottom:.3rem">&#10003;</div>
+        <div style="font-size:1rem;font-weight:700;color:#166534;margin-bottom:.2rem">Audit Complete &mdash; Q2 2026 &middot; Dr M. Patel &middot; Item 36</div>
+        <div style="font-size:.74rem;color:#475569">Signed by <span id="signoff-name-display"></span> on <span id="signoff-date-display"></span> &middot; Audit pack saved &middot; Board report ready</div>
+      </div>
+      <div style="display:flex;gap:.7rem;justify-content:center">
+        <button class="btn btn-c" onclick="viewAuditPack()">&#128196; View Audit Pack &rarr;</button>
+        <button class="btn btn-ghost" onclick="show('auditpack')">&#128193; All Audit Packages</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sh" style="margin-top:1.4rem">Current Audit Cycles</div>
+  <div style="background:#ffffff;border:1px solid #dde2ea;margin-bottom:1rem">
+    <table class="dt">
+      <thead><tr><th>Audit</th><th>Scope</th><th>Initiated</th><th>Sample</th><th>Reviewed</th><th>Findings</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+        <tr><td class="dm">Q1 2026 &mdash; Item 36 Review</td><td>Dr Patel &middot; Riverside</td><td>01 May</td><td>25 consults</td><td>14/25</td><td><span class="bdg br">3 flagged</span></td><td><span class="bdg ba">In Progress</span></td><td><button class="btn btn-c btn-sm" onclick="wfStep(3)">Continue</button></td></tr>
+        <tr><td class="dm">Q1 2026 &mdash; After-Hours</td><td>Dr Whittaker &middot; City North</td><td>28 Apr</td><td>18 consults</td><td>18/18</td><td><span class="bdg br">2 flagged</span></td><td><span class="bdg ba">Remediation</span></td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+        <tr><td class="dm">CDM Utilisation Review</td><td>All clinics</td><td>15 Apr</td><td>Network-wide</td><td>Complete</td><td><span class="bdg ba">Underutilised</span></td><td><span class="bdg bb">Pending Sign-off</span></td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
+        <tr><td class="dm">Q4 2025 &mdash; Full Network</td><td>All providers</td><td>01 Feb</td><td>120 consults</td><td>120/120</td><td><span class="bdg bg">9 findings</span></td><td><span class="bdg bg">Closed</span></td><td><button class="btn btn-ghost btn-sm">Report</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ai">
+    <div class="ai-ico">&#9201;</div>
+    <div class="ai-b">
+      <div class="ai-tag">Time comparison &mdash; Manual vs MedicalGuard</div>
+      <div class="ai-txt">Manual quarterly internal audit today: typically <strong>2&ndash;3 weeks of practice manager time</strong> per quarter, plus clinician follow-up and report writing. With MedicalGuard Pracsoft Edition: <strong>under 60 minutes for the practice manager</strong>. The sample is risk-weighted (not random), the evidence trail is tamper-evident, and the board report exports in one click. The audit is more rigorous &mdash; and cheaper to run.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ALLIED HEALTH ══ -->
+<section class="panel" id="panel-allied">
+  <button class="help-btn" onclick="openHelpDrawer('allied')" title="Help with this panel">?</button>
+  <div class="phead">
+    <div>
+      <div class="ew">Allied Health &middot; Compliance &amp; Billing</div>
+      <div class="ptitle">Allied Health Register</div>
+      <div class="psub">8 allied health practitioners across 3 sites &middot; Registrations monitored daily &middot; Every MBS billing event validated against referring GP records in Pracsoft &middot; Scheme eligibility tracked</div>
+    </div>
+  </div>
+  <div class="ai mb">
+    <div class="ai-ico" style="background:rgba(124,58,237,.12);border-color:rgba(124,58,237,.25);color:#a78bfa">&#9672;</div>
+    <div class="ai-b">
+      <div class="ai-tag" style="color:#a78bfa">IntelliSense &middot; Allied Billing Compliance</div>
+      <div class="ai-txt">Allied health practitioners billing under MBS via a Team Care Arrangement (Item 723) require a current GP Management Plan (Item 721) in Pracsoft for that patient, plus a valid TCA referral from the GP. MedicalGuard cross-references every allied health MBS billing event against the referring GP&rsquo;s Pracsoft records in real time. <strong>1 instance flagged this month:</strong> a physiotherapy session billed under MBS Item 10960 where no current TCA referral is recorded in Pracsoft. GP review required before the next billing event. All other allied health billing is compliant.</div>
+    </div>
+  </div>
+
+  <div class="g2 mb">
+    <div>
+      <div class="sh" style="color:#a78bfa">Physiotherapy</div>
+      <div class="ac">
+        <div class="av">SM</div>
+        <div class="ac-info">
+          <div class="ac-name">Sarah Mitchell</div>
+          <div class="ac-role">Physiotherapist &mdash; AHPRA PHY0001884321</div>
+          <div class="ac-meta">Riverside &amp; Caringbah &middot; WorkCover &middot; TAC &middot; Medicare CDP &middot; Private</div>
+          <div style="margin-top:.3rem;display:flex;gap:.3rem;flex-wrap:wrap">
+            <span class="bdg bg">AHPRA Current &middot; Exp 30/11/26</span>
+            <span class="bdg bb">WorkCover Provider</span>
+            <span class="bdg bb">TAC Approved</span>
+          </div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div class="bdg ba" style="display:block;margin-bottom:.3rem">TCA Alert</div>
+          <div style="font-family:var(--mono);font-size:.48rem;color:#6b7a8d">142 claims &middot; 30d</div>
+        </div>
+      </div>
+
+      <div class="sh" style="color:#a78bfa;margin-top:1rem">Dietetics / Nutrition</div>
+      <div class="ac">
+        <div class="av">RP</div>
+        <div class="ac-info">
+          <div class="ac-name">Rohini Patel</div>
+          <div class="ac-role">Accredited Practising Dietitian &mdash; DAA APD Member</div>
+          <div class="ac-meta">Hurstville &amp; Caringbah &middot; Medicare CDP Items 701/10954 &middot; Private health</div>
+          <div style="margin-top:.3rem;display:flex;gap:.3rem;flex-wrap:wrap">
+            <span class="bdg bg">DAA Membership 2026</span>
+            <span class="bdg bb">Medicare Provider 4428811B</span>
+          </div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div class="bdg bg" style="display:block;margin-bottom:.3rem">Clear</div>
+          <div style="font-family:var(--mono);font-size:.48rem;color:#6b7a8d">88 claims &middot; 30d</div>
+        </div>
+      </div>
+
+      <div class="sh" style="color:#a78bfa;margin-top:1rem">Psychology</div>
+      <div class="ac">
+        <div class="av">SO</div>
+        <div class="ac-info">
+          <div class="ac-name">Sola Okonkwo</div>
+          <div class="ac-role">Registered Psychologist &mdash; AHPRA PSY0002881234</div>
+          <div class="ac-meta">Fairfield &middot; MHTP Better Access Items 80110&ndash;80180 &middot; Private</div>
+          <div style="margin-top:.3rem;display:flex;gap:.3rem;flex-wrap:wrap">
+            <span class="bdg bg">AHPRA Current &middot; Exp 30/11/26</span>
+            <span class="bdg ba">CPD Declaration Due 30/6</span>
+          </div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div class="bdg ba" style="display:block;margin-bottom:.3rem">CPD Action</div>
+          <div style="font-family:var(--mono);font-size:.48rem;color:#6b7a8d">76 claims &middot; 30d</div>
+        </div>
+      </div>
+
+      <div class="sh" style="color:#a78bfa;margin-top:1rem">Podiatry</div>
+      <div class="ac">
+        <div class="av">LD</div>
+        <div class="ac-info">
+          <div class="ac-name">Luc Dubois</div>
+          <div class="ac-role">Podiatrist &mdash; AHPRA POD0002217734</div>
+          <div class="ac-meta">Hurstville &middot; Medicare diabetic items 10962/10964 &middot; Private health</div>
+          <div style="margin-top:.3rem;display:flex;gap:.3rem;flex-wrap:wrap">
+            <span class="bdg bg">AHPRA Current &middot; Exp 31/01/27</span>
+            <span class="bdg bb">Medicare Provider</span>
+          </div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div class="bdg bg" style="display:block;margin-bottom:.3rem">Clear</div>
+          <div style="font-family:var(--mono);font-size:.48rem;color:#6b7a8d">62 claims &middot; 30d</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="sh" style="color:#a78bfa">Occupational Therapy</div>
+      <div class="ac">
+        <div class="av">TC</div>
+        <div class="ac-info">
+          <div class="ac-name">Thomas Crawford</div>
+          <div class="ac-role">Occupational Therapist &mdash; AHPRA OCC0001554782</div>
+          <div class="ac-meta">All centres &middot; WorkCover FCE &middot; NDIS registered &middot; Medicare CDP</div>
+          <div style="margin-top:.3rem;display:flex;gap:.3rem;flex-wrap:wrap">
+            <span class="bdg bg">AHPRA Current &middot; Exp 28/02/27</span>
+            <span class="bdg bp">NDIS Registered</span>
+            <span class="bdg bb">WC FCE Approved</span>
+          </div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div class="bdg bg" style="display:block;margin-bottom:.3rem">Clear</div>
+          <div style="font-family:var(--mono);font-size:.48rem;color:#6b7a8d">54 claims &middot; 30d</div>
+        </div>
+      </div>
+
+      <div class="sh" style="color:#a78bfa;margin-top:1rem">Exercise Physiology</div>
+      <div class="ac">
+        <div class="av">JB</div>
+        <div class="ac-info">
+          <div class="ac-name">James Baxter</div>
+          <div class="ac-role">Accredited Exercise Physiologist &mdash; ESSA AEP</div>
+          <div class="ac-meta">Fairfield &middot; TAC &middot; WorkCover RTW &middot; Medicare CDP</div>
+          <div style="margin-top:.3rem;display:flex;gap:.3rem;flex-wrap:wrap">
+            <span class="bdg bg">ESSA AEP 2026</span>
+            <span class="bdg bb">TAC Approved</span>
+            <span class="bdg bb">WC RTW</span>
+          </div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div class="bdg bg" style="display:block;margin-bottom:.3rem">Clear</div>
+          <div style="font-family:var(--mono);font-size:.48rem;color:#6b7a8d">38 claims &middot; 30d</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:1rem;border-color:rgba(245,158,11,.25)">
+        <div class="stripe a"></div>
+        <div class="cl a">Allied Billing Alert &mdash; Action Required</div>
+        <div style="font-size:.76rem;color:#1a2535;font-family:var(--cond);font-weight:600;margin:.3rem 0">&#9888; Missing TCA referral &mdash; Physiotherapy MBS billing</div>
+        <div style="font-size:.68rem;color:#475569;line-height:1.55">Patient billed under MBS Item 10960 (physiotherapy under TCA) on 08/05/2026. No current Item 723 Team Care Arrangement found in Pracsoft for this patient. Item 721 GP Management Plan expires 14/03/2026. Billing invalid if TCA not current. GP review and new TCA required before next session is billed.</div>
+        <div class="btn-row"><button class="btn btn-c btn-sm">Flag for GP Review</button><button class="btn btn-ghost btn-sm">View Pracsoft Record</button></div>
+      </div>
+
+      <div class="card" style="margin-top:.8rem">
+        <div class="stripe b"></div>
+        <div class="cl c">Allied Billing Summary &mdash; 30 Days</div>
+        <table class="dt" style="margin-top:.5rem">
+          <thead><tr><th>Practitioner</th><th>MBS Items</th><th>Sessions</th><th>Funders</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="dm">S. Mitchell</td><td class="dmo">10960</td><td>142</td><td>WC &middot; TAC &middot; MBS &middot; PHI</td><td><span class="bdg ba">TCA Alert</span></td></tr>
+            <tr><td class="dm">R. Patel</td><td class="dmo">701, 10954</td><td>88</td><td>MBS CDP &middot; PHI</td><td><span class="bdg bg">Clear</span></td></tr>
+            <tr><td class="dm">S. Okonkwo</td><td class="dmo">80110, 80115</td><td>76</td><td>MHTP &middot; PHI</td><td><span class="bdg ba">CPD Due</span></td></tr>
+            <tr><td class="dm">T. Crawford</td><td class="dmo">10958, NDIS</td><td>54</td><td>WC &middot; NDIS &middot; MBS</td><td><span class="bdg bg">Clear</span></td></tr>
+            <tr><td class="dm">L. Dubois</td><td class="dmo">10962, 10964</td><td>62</td><td>MBS CDP &middot; PHI</td><td><span class="bdg bg">Clear</span></td></tr>
+            <tr><td class="dm">J. Baxter</td><td class="dmo">TAC, WC</td><td>38</td><td>TAC &middot; WC &middot; MBS</td><td><span class="bdg bg">Clear</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ RULES ══ -->
+<section class="panel" id="panel-rules">
+  <button class="help-btn" onclick="openHelpDrawer('rules')" title="Help with this panel">?</button>
+  <div class="phead">
+    <div>
+      <div class="ew">MBS Rules Engine</div>
+      <div class="ptitle">Rule Library</div>
+      <div class="psub">240+ rules applied to every Pracsoft claim. Every flag traceable to a specific MBS Online source, Services Australia guidance, or RACGP advice. Updated within 14 days of any MBS schedule change.</div>
+    </div>
+    <div style="display:flex;gap:.4rem">
+      <span style="font-family:var(--mono);font-size:.52rem;padding:.25rem .6rem;background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.2);color:#fca5a5;cursor:pointer">Critical</span>
+      <span style="font-family:var(--mono);font-size:.52rem;padding:.25rem .6rem;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.2);color:#d97706;cursor:pointer">High</span>
+      <span style="font-family:var(--mono);font-size:.52rem;padding:.25rem .6rem;background:rgba(13,122,108,.08);border:1px solid rgba(13,122,108,.2);color:#0f9b8a;cursor:pointer">Active Flags</span>
+    </div>
+  </div>
+
+  <div class="rule crit">
+    <div class="rule-id"><span>RULE &middot; MBS-036-DURATION</span><span class="bdg br">3 Active Flags</span></div>
+    <div class="rule-n">Item 36 &mdash; Minimum Duration Check</div>
+    <div class="rule-d">Item 36 requires a consultation of at least 20 minutes. Flags claims where the recorded Pracsoft appointment duration is below 20 minutes, or where consecutive Item 36 claims compress more than 3 per hour. Also triggers when a provider&rsquo;s Item 36 proportion exceeds 2&times; peer average for 30+ consecutive days.</div>
+    <div class="rule-m"><span>Source: <strong>MBS Online &middot; Item 36 descriptor</strong></span><span>Severity: <strong>Critical</strong></span><span>False-positive rate: <strong>4.1%</strong></span><span>Active flags: <strong>Dr Patel (3), Dr Khan (1)</strong></span></div>
+  </div>
+
+  <div class="rule crit">
+    <div class="rule-id"><span>RULE &middot; MBS-23-36-RATIO</span><span class="bdg br">2 Active Flags</span></div>
+    <div class="rule-n">Item 23 / 36 Ratio Anomaly</div>
+    <div class="rule-d">Detects providers where the ratio of Item 36 (long) to Item 23 (standard) claims sits more than 2 standard deviations from peer cohort. The classic Provider Review trigger &mdash; a high-Item-36 provider with a correspondingly low Item 23 rate is a statistical outlier that Services Australia data-matching flags automatically during provider selection for review.</div>
+    <div class="rule-m"><span>Source: <strong>Services Australia compliance priorities</strong></span><span>Severity: <strong>Critical</strong></span><span>Peer cohort: <strong>National GP</strong></span><span>Active flags: <strong>Dr Patel, Dr Khan</strong></span></div>
+  </div>
+
+  <div class="rule warn">
+    <div class="rule-id"><span>RULE &middot; MBS-44-AFTERHRS</span><span class="bdg ba">1 Active Flag</span></div>
+    <div class="rule-n">Item 44 &mdash; After-Hours Timestamp Validation</div>
+    <div class="rule-d">Checks consultation timestamp from Pracsoft against the MBS after-hours window. Flags claims where the appointment record places the consultation inside ordinary hours but Item 44 was billed. Also flags providers with Item 44 usage significantly above peer cohort. Timestamp discrepancies are the most directly provable finding in a Provider Review.</div>
+    <div class="rule-m"><span>Source: <strong>MBS Online &middot; After-hours items</strong></span><span>Severity: <strong>High</strong></span><span>Action: <strong>Auto-flag for review</strong></span><span>Active flags: <strong>Dr Whittaker (3 timestamp issues)</strong></span></div>
+  </div>
+
+  <div class="rule">
+    <div class="rule-id"><span>RULE &middot; MBS-CO-CLAIM-721</span><span class="bdg bg">No Active Flags</span></div>
+    <div class="rule-n">CDM Item 721 Co-Claim Eligibility</div>
+    <div class="rule-d">GP Management Plan (Item 721) requires the patient to have a chronic condition expected to last &ge;6 months. Validates frequency rules (max once per 12 months unless exceptional circumstance) and prevents 721/723 co-claim within minimum interval. Also checks that a valid Item 723 TCA is in Pracsoft before any allied health MBS billing occurs under that plan.</div>
+    <div class="rule-m"><span>Source: <strong>MBS Online &middot; CDM items 721&ndash;732</strong></span><span>Severity: <strong>Medium</strong></span><span>Auto-remediate: <strong>Yes &mdash; overdue review alert</strong></span></div>
+  </div>
+
+  <div class="rule warn">
+    <div class="rule-id"><span>RULE &middot; ALLIED-TCA-VERIFY</span><span class="bdg ba">1 Active Flag</span></div>
+    <div class="rule-n">Allied Health &mdash; TCA Referral Verification</div>
+    <div class="rule-d">Before any allied health practitioner bills under MBS via a Team Care Arrangement, MedicalGuard cross-references the billing event against the referring GP&rsquo;s Pracsoft records. A current Item 721 and a valid Item 723 referral must both be present and in-date. This rule catches the most common allied health billing error in multi-practitioner primary care settings.</div>
+    <div class="rule-m"><span>Source: <strong>MBS Online &middot; Allied health items</strong></span><span>Severity: <strong>High</strong></span><span>Active flags: <strong>1 physio MBS billing &mdash; TCA not found in Pracsoft</strong></span></div>
+  </div>
+
+  <div class="rule warn">
+    <div class="rule-id"><span>RULE &middot; MBS-2713-MHPLAN</span><span class="bdg bg">No Active Flags</span></div>
+    <div class="rule-n">Item 2713 &mdash; Mental Health Plan Requirement</div>
+    <div class="rule-d">Mental health consultations (Items 2710/2712/2713) require a documented Mental Health Treatment Plan or must be appropriately linked to a plan in Pracsoft. MedicalGuard flags first-time use of these items without an underlying MHTP record, and validates that psychology referrals (Items 80110&ndash;80180) are within the 10-session annual limit per patient.</div>
+    <div class="rule-m"><span>Source: <strong>MBS Online &middot; MH items</strong></span><span>Severity: <strong>Medium</strong></span><span>RACGP guidance: <strong>Yes</strong></span></div>
+  </div>
+
+  <div class="rule crit">
+    <div class="rule-id"><span>RULE &middot; MBS-DUP-CLAIM</span><span class="bdg bg">No Active Flags This Month</span></div>
+    <div class="rule-n">Duplicate Claim Detection</div>
+    <div class="rule-d">Same patient + same item + same provider + same day. The highest-confidence indicator of inadvertent double-billing &mdash; and the easiest finding for Services Australia to prove. MedicalGuard checks against Pracsoft records in real time. Optional pre-submit block prevents the duplicate reaching Medicare at all.</div>
+    <div class="rule-m"><span>Source: <strong>Services Australia compliance focus</strong></span><span>Severity: <strong>Critical</strong></span><span>Block mode: <strong>Optional pre-submit</strong></span></div>
+  </div>
+
+  <div class="rule crit">
+    <div class="rule-id"><span>RULE &middot; HIC-80-20</span><span class="bdg bg">No Active Flags</span></div>
+    <div class="rule-n">80/20 Rule &mdash; Daily Volume Monitor</div>
+    <div class="rule-d">Section 82A of the Health Insurance Act: providing 80+ services on 20 or more days in 12 months triggers compulsory Professional Services Review. MedicalGuard runs a daily volume count for every provider with a 90-day forward projection. Alert fires at 70 services per day. No providers are currently on a trajectory to breach. Dr Patel&rsquo;s highest day this month was 64 services.</div>
+    <div class="rule-m"><span>Source: <strong>HIC Act s.82A &middot; PSR trigger</strong></span><span>Severity: <strong>Critical</strong></span><span>Real-time alert: <strong>Yes &mdash; daily at 70 services</strong></span></div>
+  </div>
+
+  <div class="rule">
+    <div class="rule-id"><span>RULE &middot; TELE-91890-EXISTING</span><span class="bdg bg">No Active Flags</span></div>
+    <div class="rule-n">Telehealth &mdash; Existing Patient Requirement</div>
+    <div class="rule-d">Telehealth phone consultations require the patient to have been seen face-to-face in the same practice within the prior 12 months (with limited exceptions). MedicalGuard validates against Pracsoft visit history for every telehealth claim. Exception codes are recognised and documented in the audit record.</div>
+    <div class="rule-m"><span>Source: <strong>MBS Telehealth schedule</strong></span><span>Severity: <strong>Medium</strong></span><span>Exception handling: <strong>Yes</strong></span></div>
+  </div>
+
+  <div style="margin-top:.8rem;padding:.68rem;background:#f1f5f9;border:1px solid #dde2ea;font-family:var(--mono);font-size:.54rem;color:#6b7a8d;letter-spacing:.06em">
+    Showing 9 of 240+ active rules &middot; Rules cover: general practice, mental health, chronic disease management, skin procedures, immunisations, after-hours, telehealth, bulk-billing incentives, allied health co-claim &middot; Last MBS update applied: 1 November 2025
+  </div>
+</section>
+
+<!-- ══ CDM / MHTP ══ -->
+<section class="panel" id="panel-cdm">
+  <div class="phead"><div><div class="ew">Chronic Disease &amp; Mental Health</div><div class="ptitle">CDM / MHTP Utilisation</div><div class="psub">Items 721/723 CDM Plans &middot; Items 2710/2712/2713 Mental Health &middot; Psychology 80110&ndash;80180 &middot; Under- and over-utilisation monitoring</div></div></div>
+  <div class="g3 mb">
+    <div class="card"><div class="stripe g"></div><div class="cl g">Active CDM Plans</div><div class="knum" style="color:#22c55e">84</div><div class="ksub">Item 721 GP Management Plans</div><div class="ktag inf">4.2% of eligible encounters</div></div>
+    <div class="card"><div class="stripe a"></div><div class="cl a">Annual Review Overdue</div><div class="knum" style="color:#d97706">3</div><div class="ksub">Cannot bill Item 723 until reviewed</div><div class="ktag wrn">Action this week</div></div>
+    <div class="card"><div class="stripe c"></div><div class="cl c">Revenue Opportunity</div><div class="knum" style="color:#0f9b8a">$82K</div><div class="ksub">Uncaptured legitimate Medicare/yr</div><div class="ktag inf">Based on patient complexity data</div></div>
+  </div>
+  <div class="ai">
+    <div class="ai-ico">&#9672;</div>
+    <div class="ai-b">
+      <div class="ai-tag">IntelliSense &middot; CDM Revenue Opportunity</div>
+      <div class="ai-txt">Network CDM plan creation rate is <strong>4.2%</strong> of eligible patient encounters &mdash; against a benchmarked potential of 8&ndash;12% based on patient complexity data in Pracsoft. This underutilisation represents an estimated <strong>$82,000 in uncaptured legitimate Medicare revenue annually</strong>. Additionally, 3 patients have existing Item 721 plans where the annual review is overdue, preventing re-billing of Item 723 (Team Care Arrangement) &mdash; approximately $450 in blocked billings per patient. None of this is a compliance failure: it is legitimate revenue the practice is entitled to claim but is not claiming.</div>
+    </div>
+  </div>
+  <div class="g2">
+    <div>
+      <div class="sh">CDM by Provider</div>
+      <div style="background:#ffffff;border:1px solid #dde2ea">
+        <table class="dt">
+          <thead><tr><th>Provider</th><th>721 Active</th><th>Review Due</th><th>723 Eligible</th><th>Allied Linked</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="dm">Dr L. Nguyen</td><td>22</td><td><span class="bdg ba">1</span></td><td>18</td><td>Physio &middot; Dietitian</td><td><span class="bdg ba">Review Required</span></td></tr>
+            <tr><td class="dm">Dr R. Singh</td><td>18</td><td><span class="bdg bg">0</span></td><td>16</td><td>Podiatry &middot; OT</td><td><span class="bdg bg">Compliant</span></td></tr>
+            <tr><td class="dm">Dr T. Cole</td><td>16</td><td><span class="bdg ba">2</span></td><td>14</td><td>Physio &middot; Dietitian</td><td><span class="bdg ba">Review Required</span></td></tr>
+            <tr><td class="dm">Dr E. Park</td><td>14</td><td><span class="bdg bg">0</span></td><td>12</td><td>Psychology &middot; Podiatry</td><td><span class="bdg bg">Compliant</span></td></tr>
+            <tr><td class="dm">Dr M. Patel</td><td>8</td><td><span class="bdg bg">0</span></td><td>8</td><td>Physio</td><td><span class="bdg bg">Compliant</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <div class="sh">MHTP &mdash; Better Access</div>
+      <div class="g2 mb" style="gap:.7rem">
+        <div class="card"><div class="stripe p"></div><div class="cl p">Active MHTPs</div><div class="knum" style="color:#a78bfa;font-size:1.8rem">31</div><div class="ksub">All within session limits</div></div>
+        <div class="card"><div class="stripe b"></div><div class="cl c">Avg Sessions Used</div><div class="knum" style="color:#0f9b8a;font-size:1.8rem">5.4</div><div class="ksub">of 10 annual limit</div></div>
+      </div>
+      <div class="ai" style="margin-bottom:0">
+        <div class="ai-ico">&#9672;</div>
+        <div class="ai-b">
+          <div class="ai-tag">MHTP Compliance</div>
+          <div class="ai-txt">All 31 MHTP patients are within the 10-session annual limit. MedicalGuard validates that Item 2713 has a documented MHTP in Pracsoft before psychology referral billing. All current referrals verified. Dr Okafor has 4 patients approaching the 6-session threshold &mdash; extension referral (additional 4 sessions) should be initiated if ongoing treatment is clinically indicated. Billing is currently fully compliant.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 80/20 MONITOR ══ -->
+<section class="panel" id="panel-eighty">
+  <div class="phead"><div><div class="ew">PSR Risk &middot; Services Australia</div><div class="ptitle">80/20 Rule Monitor</div><div class="psub">s.82A Health Insurance Act &middot; 80+ services on 20+ days in 12 months triggers compulsory PSR review &middot; Daily count for every provider &middot; 90-day forward projection &middot; Alert at 70 services</div></div></div>
+  <div class="g4 mb">
+    <div class="card"><div class="stripe g"></div><div class="cl g">Providers Monitored</div><div class="knum" style="color:#22c55e">24</div><div class="ksub">All under threshold</div></div>
+    <div class="card"><div class="stripe c"></div><div class="cl c">Highest Day This Month</div><div class="knum" style="color:#0f9b8a">64</div><div class="ksub">Dr Patel &middot; 14 May 2026</div></div>
+    <div class="card"><div class="stripe a"></div><div class="cl a">Days Over 60 Services</div><div class="knum" style="color:#d97706">3</div><div class="ksub">Dr Patel &middot; last 90 days</div></div>
+    <div class="card"><div class="stripe g"></div><div class="cl g">Breach Trajectory</div><div class="knum" style="color:#22c55e">&mdash;</div><div class="ksub">No provider on track to breach</div></div>
+  </div>
+  <div class="ai"><div class="ai-ico">&#9201;</div><div class="ai-b"><div class="ai-tag">IntelliSense &middot; 80/20 Projection</div><div class="ai-txt">No provider is currently on a trajectory to breach the s.82A threshold. Dr Patel&rsquo;s 64-service day on 14 May is noted &mdash; if this pattern continued for 17+ more days, it would trigger PSR review. Current 90-day projection at present billing rates: <strong>Dr Patel will not breach in the next 12 months</strong> unless daily volume increases significantly. Monitoring continues daily. Real-time alert fires if any provider reaches 70 services in a single day.</div></div></div>
+</section>
+
+<!-- ══ AHPRA ══ -->
+<section class="panel" id="panel-ahpra">
+  <div class="phead"><div><div class="ew">AHPRA &middot; All Practitioners</div><div class="ptitle">AHPRA Register</div><div class="psub">Daily check against AHPRA public register &middot; 90/60/30-day expiry alerts &middot; Immediate suspension and condition detection &middot; All GPs + allied health practitioners</div></div></div>
+  <div class="g4 mb">
+    <div class="card"><div class="stripe r"></div><div class="cl r">Expired / Lapsed</div><div class="knum" style="color:#dc2626">1</div><div class="ksub">Dr P. Sharma &middot; billing suspended</div></div>
+    <div class="card"><div class="stripe a"></div><div class="cl a">Expiring 30 Days</div><div class="knum" style="color:#d97706">2</div><div class="ksub">Action required</div></div>
+    <div class="card"><div class="stripe g"></div><div class="cl g">Current</div><div class="knum" style="color:#22c55e">29</div><div class="ksub">All registrations valid</div></div>
+    <div class="card"><div class="stripe p"></div><div class="cl p">Non-AHPRA Reg.</div><div class="knum" style="color:#a78bfa">2</div><div class="ksub">Dietitian (DAA) &middot; EP (ESSA)</div></div>
+  </div>
+  <div style="background:#ffffff;border:1px solid #dde2ea">
+    <table class="dt">
+      <thead><tr><th>Practitioner</th><th>Role</th><th>AHPRA / Reg No.</th><th>Expiry</th><th>Medicare Impact</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td class="dm" style="color:#dc2626">Dr Priya Sharma</td><td>GP</td><td class="dmo">MED0001923847</td><td><span class="bdg br">EXPIRED 10/05/26</span></td><td>All billing SUSPENDED</td><td><span class="bdg br">CRITICAL</span></td></tr>
+        <tr><td class="dm">Dr M. Patel</td><td>GP</td><td class="dmo">MED0001847291</td><td>30/11/2026</td><td>Normal</td><td><span class="bdg bg">Current</span></td></tr>
+        <tr><td class="dm">Dr A. Whittaker</td><td>GP</td><td class="dmo">MED0003192847</td><td>30/11/2026</td><td>Normal</td><td><span class="bdg bg">Current</span></td></tr>
+        <tr><td class="dm">Dr S. Khan</td><td>GP</td><td class="dmo">MED0002710384</td><td>30/11/2026</td><td>Normal</td><td><span class="bdg bg">Current</span></td></tr>
+        <tr><td class="dm">Sarah Mitchell</td><td>Physiotherapist</td><td class="dmo">PHY0001884321</td><td>30/11/2026</td><td>WC &middot; TAC &middot; MBS valid</td><td><span class="bdg bg">Current</span></td></tr>
+        <tr><td class="dm">Sola Okonkwo</td><td>Psychologist</td><td class="dmo">PSY0002881234</td><td>30/11/2026</td><td>MHTP billing valid</td><td><span class="bdg ba">CPD Dec due 30/6</span></td></tr>
+        <tr><td class="dm">Thomas Crawford</td><td>OT</td><td class="dmo">OCC0001554782</td><td>28/02/2027</td><td>WC &middot; NDIS valid</td><td><span class="bdg bg">Current</span></td></tr>
+        <tr><td class="dm">Luc Dubois</td><td>Podiatrist</td><td class="dmo">POD0002217734</td><td>31/01/2027</td><td>MBS CDP valid</td><td><span class="bdg bg">Current</span></td></tr>
+        <tr><td class="dm">Rohini Patel</td><td>Dietitian (APD)</td><td class="dmo">DAA-2026</td><td>31/12/2026</td><td>MBS CDP valid</td><td><span class="bdg bg">Current</span></td></tr>
+        <tr><td class="dm">James Baxter</td><td>Exercise Physiologist</td><td class="dmo">ESSA-AEP-2026</td><td>31/12/2026</td><td>TAC &middot; WC valid</td><td><span class="bdg bg">Current</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══ PRIVACY ══ -->
+<section class="panel" id="panel-privacy">
+  <div class="phead"><div><div class="ew">Privacy Act 1988</div><div class="ptitle">Privacy Governance</div><div class="psub">Australian Privacy Principles &middot; NDB scheme &middot; Patient data tokenised at ingest boundary &middot; All data stored in Australia (AWS ap-southeast-2)</div></div></div>
+  <div class="g3 mb">
+    <div class="card"><div class="stripe g"></div><div class="cl g">APP Compliance</div><div class="knum" style="color:#22c55e">13/13</div><div class="ksub">All principles monitored</div></div>
+    <div class="card"><div class="stripe g"></div><div class="cl g">Active Breaches</div><div class="knum" style="color:#22c55e">0</div><div class="ksub">No notifiable incidents</div></div>
+    <div class="card"><div class="stripe c"></div><div class="cl c">Data Access Requests</div><div class="knum" style="color:#0f9b8a">2</div><div class="ksub">Both responded within 30 days</div></div>
+  </div>
+  <div class="ai"><div class="ai-ico">&#128274;</div><div class="ai-b"><div class="ai-tag">Privacy Act &middot; Data Architecture</div><div class="ai-txt">MedicalGuard processes billing data from Pracsoft under a Data Processing Agreement. Patient identifiers are tokenised at the ingest boundary &mdash; no full name, DOB, or Medicare number is stored in the compliance layer. The token map is held in a separate, audit-logged keystore. All data remains in Australia (AWS ap-southeast-2 &middot; Sydney). The June 2025 statutory tort reform means patients have direct legal action for serious privacy invasion. Health data breaches are the highest-risk category. NDB response runbook is current. 30-day OAIC countdown clock built in if a breach occurs.</div></div></div>
+</section>
+
+<!-- ══ AUDIT PACKAGES ══ -->
+<!-- MBS ANALYTICS -->
+<section class="panel" id="panel-mbs">
+  <button class="help-btn" onclick="openHelpDrawer('mbs')" title="Help with this panel">?</button>
+  <div class="phead">
+    <div>
+      <div class="ew" style="color:#0d7a6c">&#128202; Billing Oversight &middot; MBS Intelligence</div>
+      <div class="ptitle">MBS Analytics</div>
+      <div class="psub">Item-level billing analysis for all 24 GPs across 6 clinics &mdash; volume trends, revenue breakdown, peer benchmarking, and compliance flags. Updated every 15 minutes from Pracsoft.</div>
+    </div>
+    <div style="display:flex;gap:.45rem">
+      <button class="btn btn-c btn-sm" onclick="show('heatmap')">Item Heatmap</button>
+      <button class="btn btn-ghost btn-sm" onclick="show('optimise')">Revenue Opportunities</button>
+    </div>
+  </div>
+  <div class="g4 mb">
+    <div class="card"><div class="stripe c"></div><div class="cl c">Total MBS Items Billed</div><div class="knum" style="color:#0f9b8a">42,318</div><div class="ksub">May 2026 &middot; all providers</div><div class="ktag inf">&#9650; 3.2% vs April 2026</div></div>
+    <div class="card"><div class="stripe g"></div><div class="cl g">Gross Medicare Benefits</div><div class="knum" style="color:#22c55e">$3.26<span style="font-size:1.1rem">M</span></div><div class="ksub">Month to date &middot; all item categories</div><div class="ktag up">&#9650; $94K vs same period</div></div>
+    <div class="card"><div class="stripe a"></div><div class="cl a">Unique MBS Items Used</div><div class="knum" style="color:#d97706">84</div><div class="ksub">Of 240+ items in scope</div><div class="ktag wrn">12 items newly active</div></div>
+    <div class="card"><div class="stripe r"></div><div class="cl r">Items Under Compliance Review</div><div class="knum" style="color:#dc2626">7</div><div class="ksub">Flagged by rule engine</div><div class="ktag dn">Items 36, 44 &middot; 2 providers</div></div>
+  </div>
+  <div class="g2 mb">
+    <div class="card">
+      <div class="stripe c"></div><div class="cl c">Top MBS Items by Volume &mdash; May 2026</div>
+      <div style="margin-top:.5rem">
+        <div class="sh" style="margin-bottom:.35rem;font-size:.62rem">GP CONSULTATION ITEMS</div>
+        <div class="pb-w"><div class="pb-l"><span>Item 23 &mdash; Standard consult</span><span style="color:#0f9b8a;font-weight:600">16,081 &middot; $1.24M</span></div><div class="pb"><div class="pf pc" style="width:85%"></div></div></div>
+        <div class="pb-w"><div class="pb-l"><span>Item 36 &mdash; Long consult (&ge;20 min) &#9888;</span><span style="color:#d97706;font-weight:600">11,425 &middot; $890K</span></div><div class="pb"><div class="pf pa" style="width:60%"></div></div></div>
+        <div class="pb-w"><div class="pb-l"><span>Item 44 &mdash; After-hours &#9888;</span><span style="color:#d97706;font-weight:600">2,963 &middot; $224K</span></div><div class="pb"><div class="pf pa" style="width:32%"></div></div></div>
+        <div class="pb-w"><div class="pb-l"><span>Item 3 &mdash; Brief consult</span><span style="color:#475569">1,847 &middot; $62K</span></div><div class="pb"><div class="pf pc" style="width:18%"></div></div></div>
+        <div class="sh" style="margin:.55rem 0 .35rem;font-size:.62rem">TELEHEALTH &amp; CDM</div>
+        <div class="pb-w"><div class="pb-l"><span>Item 91890 &mdash; Telehealth phone</span><span style="color:#22c55e;font-weight:600">2,580 &middot; $196K</span></div><div class="pb"><div class="pf pg" style="width:27%"></div></div></div>
+        <div class="pb-w"><div class="pb-l"><span>Item 721 &mdash; GP Management Plan</span><span style="color:#0d7a6c;font-weight:600">1,242 &middot; $93K</span></div><div class="pb"><div class="pf pc" style="width:26%"></div></div></div>
+        <div class="pb-w"><div class="pb-l"><span>Item 10990 &mdash; Triple bulk bill incentive</span><span style="color:#d97706;font-weight:600">5,124 &middot; $387K (under capacity)</span></div><div class="pb"><div class="pf pa" style="width:34%"></div></div></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.7rem">
+      <div class="card"><div class="stripe r"></div><div class="cl r">Item 36 &mdash; Peer Benchmark</div>
+        <div style="margin-top:.45rem;display:flex;flex-direction:column;gap:.3rem">
+          <div style="display:flex;justify-content:space-between;font-size:.7rem;padding:.28rem .4rem;background:#fef2f2;border-radius:3px"><span style="font-weight:600;color:#1a2535">Dr M. Patel</span><span><span style="color:#dc2626;font-weight:700">61%</span> <span style="color:#6b7a8d;font-size:.62rem">(peer: 20%)</span></span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.7rem;padding:.28rem .4rem;background:#fffbeb;border-radius:3px"><span style="font-weight:600;color:#1a2535">Dr S. Khan</span><span><span style="color:#d97706;font-weight:700">47%</span> <span style="color:#6b7a8d;font-size:.62rem">(peer: 20%)</span></span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.7rem;padding:.28rem .4rem;background:#f8fafc;border-radius:3px"><span style="font-weight:600;color:#1a2535">Dr A. Whittaker</span><span><span style="color:#475569;font-weight:600">18%</span> <span style="color:#6b7a8d;font-size:.62rem">(peer: 20%)</span></span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.7rem;padding:.28rem .4rem;background:#f0fdf4;border-radius:3px"><span style="font-weight:600;color:#1a2535">Dr L. Nguyen</span><span><span style="color:#22c55e;font-weight:600">19%</span> <span style="color:#6b7a8d;font-size:.62rem">(peer: 20%)</span></span></div>
+          <div style="display:flex;justify-content:space-between;font-size:.7rem;padding:.28rem .4rem;background:#f0fdf4;border-radius:3px"><span style="font-weight:600;color:#1a2535">Dr R. Singh</span><span><span style="color:#22c55e;font-weight:600">14%</span> <span style="color:#6b7a8d;font-size:.62rem">(peer: 20%)</span></span></div>
+        </div>
+      </div>
+      <div class="card"><div class="stripe g"></div><div class="cl g">CDM Utilisation vs Estimated Capacity</div>
+        <div style="margin-top:.45rem">
+          <div class="pb-w"><div class="pb-l"><span>Item 721 (CDM Plans)</span><span style="color:#0d7a6c;font-weight:600">4.2% &mdash; capacity 9%</span></div><div class="pb"><div class="pf pg" style="width:47%"></div></div></div>
+          <div class="pb-w"><div class="pb-l"><span>Item 723 (TCA)</span><span style="color:#0d7a6c;font-weight:600">3.8% &mdash; capacity 8%</span></div><div class="pb"><div class="pf pg" style="width:48%"></div></div></div>
+          <div class="pb-w"><div class="pb-l"><span>Item 10990 (Triple BB)</span><span style="color:#dc2626;font-weight:600">22% &mdash; capacity 65%</span></div><div class="pb"><div class="pf pr" style="width:34%"></div></div></div>
+          <div style="text-align:right;font-family:var(--mono);font-size:.5rem;color:#d97706;margin-top:.35rem">Gap = est. <strong style="color:#d97706">$82,000</strong> uncaptured &middot; <span onclick="show('optimise')" style="color:#0d7a6c;cursor:pointer">Ask AI &rarr;</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sh" style="margin-bottom:.45rem">6-Month Item Volume Trend</div>
+  <div style="background:#ffffff;border:1px solid #dde2ea;margin-bottom:1rem">
+    <table class="dt">
+      <thead><tr><th>MBS Item</th><th>Description</th><th>Dec 25</th><th>Jan 26</th><th>Feb 26</th><th>Mar 26</th><th>Apr 26</th><th>May 26</th><th>Trend</th><th>Flag</th></tr></thead>
+      <tbody>
+        <tr><td class="dm">Item 23</td><td>Standard consult</td><td>14,820</td><td>15,140</td><td>15,380</td><td>15,690</td><td>15,582</td><td style="color:#0f9b8a;font-weight:600">16,081</td><td style="color:#22c55e">&#9650; +3.2%</td><td><span class="bdg bg">Normal</span></td></tr>
+        <tr><td class="dm">Item 36</td><td>Long consult</td><td>9,840</td><td>10,120</td><td>10,480</td><td>10,820</td><td>11,102</td><td style="color:#d97706;font-weight:600">11,425</td><td style="color:#dc2626">&#9650; +16% (6mo)</td><td><span class="bdg br">Review</span></td></tr>
+        <tr><td class="dm">Item 44</td><td>After-hours</td><td>2,610</td><td>2,720</td><td>2,810</td><td>2,890</td><td>2,928</td><td style="color:#d97706;font-weight:600">2,963</td><td style="color:#d97706">&#9650; +13% (6mo)</td><td><span class="bdg ba">Monitor</span></td></tr>
+        <tr><td class="dm">Item 91890</td><td>Telehealth phone</td><td>2,210</td><td>2,340</td><td>2,410</td><td>2,490</td><td>2,512</td><td style="color:#22c55e;font-weight:600">2,580</td><td style="color:#22c55e">&#9650; Steady</td><td><span class="bdg bg">Normal</span></td></tr>
+        <tr><td class="dm">Item 721</td><td>CDM Plan</td><td>1,080</td><td>1,110</td><td>1,140</td><td>1,170</td><td>1,198</td><td style="color:#0d7a6c;font-weight:600">1,242</td><td style="color:#22c55e">&#9650; Improving</td><td><span class="bdg bb">Opportunity</span></td></tr>
+        <tr><td class="dm">Item 10990</td><td>Triple BB incentive</td><td>4,820</td><td>4,910</td><td>4,980</td><td>5,040</td><td>5,088</td><td style="color:#d97706;font-weight:600">5,124</td><td style="color:#d97706">&#9654; Under capacity</td><td><span class="bdg ba">Opportunity</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="ai">
+    <div class="ai-ico">&#9672;</div>
+    <div class="ai-b">
+      <div class="ai-tag">IntelliSense AI &middot; MBS Analytics Summary</div>
+      <div class="ai-txt">Item 36 volume has grown <strong>16% over 6 months</strong> &mdash; significantly faster than Item 23 growth of 8.7%. This divergence is the primary Services Australia data-matching signal. Two providers (Patel 61%, Khan 47%) need action this week. Item 10990 (triple bulk billing incentive) represents <strong>$34,000/year with zero compliance risk</strong> &mdash; currently 22% utilisation vs 65% eligible patient base.</div>
+      <button class="ai-act" onclick="optAsk('Show me the full MBS revenue breakdown and top opportunities for improving billing across all items')">&#8594; Ask AI for full MBS revenue analysis</button>
+    </div>
+  </div>
+</section>
+<section class="panel" id="panel-auditpack">
+  <div class="phead">
+    <div>
+      <div class="ew">Reporting &amp; Evidence</div>
+      <div class="ptitle">Audit Packages</div>
+      <div class="psub">Board-ready compliance evidence packs &mdash; click View on any completed pack to read the full signed document inline. Generate new packages for the current period in one click.</div>
+    </div>
+    <button class="btn btn-c btn-sm" onclick="startNewAudit();show('audit')">+ New Audit</button>
+  </div>
+  <div class="sh" style="margin-bottom:.5rem">Completed Audit Packages</div>
+  <div style="background:#ffffff;border:1px solid #dde2ea;margin-bottom:1.1rem">
+    <table class="dt">
+      <thead><tr><th>Package</th><th>Scope</th><th>Generated</th><th>Signed by</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+        <tr><td class="dm">Q2 2026 &mdash; Item 36 Audit &middot; Dr Patel</td><td>Riverside &middot; Feb&ndash;May 2026</td><td>22 May 2026</td><td>Dr Sarah Chen</td><td><span class="bdg bg">Signed &amp; Complete</span></td><td><button class="btn btn-c btn-sm" onclick="openAuditPackModal('patel_q2')">View &#128196;</button></td></tr>
+        <tr><td class="dm">Q1 2026 &mdash; After-Hours &middot; Dr Whittaker</td><td>City North &middot; Nov 25&ndash;Jan 26</td><td>15 Feb 2026</td><td>Dr Sarah Chen</td><td><span class="bdg bg">Signed &amp; Complete</span></td><td><button class="btn btn-c btn-sm" onclick="openAuditPackModal('whittaker_q1')">View &#128196;</button></td></tr>
+        <tr><td class="dm">Q4 2025 &mdash; Full Network Quarterly</td><td>All 6 clinics &middot; All providers</td><td>05 Feb 2026</td><td>Dr Sarah Chen</td><td><span class="bdg bg">Board Approved</span></td><td><button class="btn btn-c btn-sm" onclick="openAuditPackModal('network_q4')">View &#128196;</button></td></tr>
+        <tr><td class="dm">CDM Utilisation Review</td><td>All clinics &middot; Items 721, 723</td><td>20 Apr 2026</td><td style="color:#d97706">Pending</td><td><span class="bdg bb">Pending Sign-off</span></td><td style="display:flex;gap:.3rem"><button class="btn btn-c btn-sm" onclick="openAuditPackModal('cdm_review')">View &#128196;</button><button class="btn btn-ghost btn-sm" onclick="show('audit');goAuditStep(5)">Sign-off &rarr;</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="sh" style="margin-bottom:.5rem">Generate New Package</div>
+  <div class="g3">
+    <div class="card" style="cursor:pointer" onclick="openAuditPackModal('patel_q2')"><div class="stripe c"></div><div style="font-size:1.1rem;margin-bottom:.35rem">&#128203;</div><div class="cl c" style="font-size:.72rem">Medicare Compliance Audit Pack</div><div style="font-size:.7rem;color:#475569;margin:.3rem 0 .5rem">Full MBS item appropriateness, peer benchmarking, and clinical justification packs. Pre-built for Dr Patel and Dr Whittaker.</div><div class="btn-row"><button class="btn btn-c btn-sm">Generate</button><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openAuditPackModal('patel_q2')">View Sample</button></div></div>
+    <div class="card" style="cursor:pointer" onclick="openAuditPackModal('network_q4')"><div class="stripe g"></div><div style="font-size:1.1rem;margin-bottom:.35rem">&#128202;</div><div class="cl g" style="font-size:.72rem">Board / Audit Committee Report</div><div style="font-size:.7rem;color:#475569;margin:.3rem 0 .5rem">Quarterly pack &mdash; billing integrity score, provider risk register, findings and remediation. PDF, board-ready.</div><div class="btn-row"><button class="btn btn-c btn-sm">Generate Q2 2026</button><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openAuditPackModal('network_q4')">View Q4 2025</button></div></div>
+    <div class="card"><div class="stripe r"></div><div style="font-size:1.1rem;margin-bottom:.35rem">&#9888;</div><div class="cl r" style="font-size:.72rem">Provider Review Response Pack</div><div style="font-size:.7rem;color:#475569;margin:.3rem 0 .5rem">PSR-format clinical justification &mdash; consultation records, duration logs, peer comparison, corrective action evidence.</div><div class="btn-row"><button class="btn btn-c btn-sm">Generate</button></div></div>
+    <div class="card"><div class="stripe p"></div><div style="font-size:1.1rem;margin-bottom:.35rem">&#127877;</div><div class="cl p" style="font-size:.72rem">RACGP Accreditation Evidence</div><div style="font-size:.7rem;color:#475569;margin:.3rem 0 .5rem">Standards 1&ndash;5 evidence from Pracsoft and MedicalGuard &mdash; clinical governance, billing integrity, practitioner credentialing.</div><div class="btn-row"><button class="btn btn-c btn-sm">Generate</button></div></div>
+    <div class="card"><div class="stripe c"></div><div style="font-size:1.1rem;margin-bottom:.35rem">&#128274;</div><div class="cl c" style="font-size:.72rem">Privacy Act Evidence Pack</div><div style="font-size:.7rem;color:#475569;margin:.3rem 0 .5rem">APP compliance, data access logs, tokenisation records, NDB scheme readiness, breach response runbook.</div><div class="btn-row"><button class="btn btn-c btn-sm">Generate</button></div></div>
+    <div class="card"><div class="stripe a"></div><div style="font-size:1.1rem;margin-bottom:.35rem">&#129306;</div><div class="cl a" style="font-size:.72rem">Allied Health Compliance Report</div><div style="font-size:.7rem;color:#475569;margin:.3rem 0 .5rem">AHPRA/DAA/ESSA status, CPD compliance, TCA verification, MBS co-claim audit, scheme eligibility.</div><div class="btn-row"><button class="btn btn-c btn-sm">Generate</button></div></div>
+  </div>
+</section>
+
+<!-- AUDIT PACK VIEWER MODAL -->
+<div class="mo" id="auditpack-modal">
+  <div class="md" style="max-width:780px">
+    <div class="md-top">
+      <div><div class="md-title" id="apm-title">Audit Package</div><div class="md-sub" id="apm-sub">MedicalGuard &middot; Pracsoft Edition &middot; CONFIDENTIAL</div></div>
+      <div style="display:flex;gap:.5rem;align-items:center">
+        <button class="btn btn-c btn-sm" onclick="window.print()">&#128424; Print / PDF</button>
+        <button class="md-close" onclick="closeMo('auditpack-modal')">&#x2715;</button>
+      </div>
+    </div>
+    <div class="md-body" id="apm-body" style="max-height:75vh;overflow-y:auto"></div>
+  </div>
+</div>
+<!-- ══ BILLING OPTIMISER ══ -->
+<section class="panel" id="panel-optimise">
+  <button class="help-btn" onclick="openHelpDrawer('optimise')" title="Help with this panel">?</button>
+  <div class="phead">
+    <div>
+      <div class="ew" style="color:#f59e0b">&#9733; Revenue Intelligence &middot; AI-Powered</div>
+      <div class="ptitle">Billing Optimiser</div>
+      <div class="psub">Ask IntelliSense how your practice can legitimately improve Medicare revenue &mdash; uncaptured items, underutilised entitlements, CDM opportunities, and provider-specific recommendations. Grounded in your live Pracsoft data.</div>
+    </div>
+  </div>
+
+  <!-- Revenue snapshot cards -->
+  <div class="g5 mb" id="opt-kpis">
+    <div class="card" style="cursor:pointer" onclick="optAsk('What CDM/chronic disease management revenue am I missing?')">
+      <div class="stripe a"></div>
+      <div class="cl a">CDM Opportunity</div>
+      <div class="knum" style="color:#d97706;font-size:1.8rem">$82K</div>
+      <div class="ksub">Uncaptured Item 721/723/year</div>
+      <div style="font-family:var(--mono);font-size:.5rem;color:#d97706;margin-top:.3rem">Click to ask AI &rarr;</div>
+    </div>
+    <div class="card" style="cursor:pointer" onclick="optAsk('Which bulk billing incentive items am I missing or not applying correctly?')">
+      <div class="stripe c"></div>
+      <div class="cl c">Bulk Billing Incentives</div>
+      <div class="knum" style="color:#0f9b8a;font-size:1.8rem">$34K</div>
+      <div class="ksub">Triple incentive underclaiming</div>
+      <div style="font-family:var(--mono);font-size:.5rem;color:#0f9b8a;margin-top:.3rem">Click to ask AI &rarr;</div>
+    </div>
+    <div class="card" style="cursor:pointer" onclick="optAsk('Which telehealth items is my network underutilising?')">
+      <div class="stripe g"></div>
+      <div class="cl g">Telehealth Gap</div>
+      <div class="knum" style="color:#22c55e;font-size:1.8rem">$18K</div>
+      <div class="ksub">Eligible consults not billed tele</div>
+      <div style="font-family:var(--mono);font-size:.5rem;color:#22c55e;margin-top:.3rem">Click to ask AI &rarr;</div>
+    </div>
+    <div class="card" style="cursor:pointer" onclick="optAsk('Which allied health MBS items are we underutilising across the network?')">
+      <div class="stripe p"></div>
+      <div class="cl p">Allied Health MBS</div>
+      <div class="knum" style="color:#a78bfa;font-size:1.8rem">$27K</div>
+      <div class="ksub">Unlinked TCA allied sessions</div>
+      <div style="font-family:var(--mono);font-size:.5rem;color:#a78bfa;margin-top:.3rem">Click to ask AI &rarr;</div>
+    </div>
+    <div class="card" style="cursor:pointer" onclick="optAsk('What is my total estimated annual revenue optimisation opportunity?')">
+      <div class="stripe r"></div>
+      <div class="cl" style="color:#f59e0b">Total Opportunity</div>
+      <div class="knum" style="color:#f59e0b;font-size:1.8rem">$161K</div>
+      <div class="ksub">Estimated annual uplift available</div>
+      <div style="font-family:var(--mono);font-size:.5rem;color:#f59e0b;margin-top:.3rem">Click to ask AI &rarr;</div>
+    </div>
+  </div>
+
+  <div class="g2" style="gap:1.2rem;align-items:start">
+
+    <!-- LEFT: suggested prompts + provider cards -->
+    <div>
+      <div class="sh">Suggested questions &mdash; click to ask</div>
+      <div id="opt-suggestions" style="display:flex;flex-direction:column;gap:.38rem;margin-bottom:1.2rem">
+        <div class="opt-q" onclick="optAsk(this.dataset.q)" data-q="Give me the network compliance status and provider risk register for May 2026">Network compliance status overview</div>
+        <div class="opt-q" onclick="optAsk(this.dataset.q)" data-q="Give me the full breakdown of Item 36 long consultation risk across all providers">Item 36 risk — all providers</div>
+        <div class="opt-q" onclick="optAsk(this.dataset.q)" data-q="Explain the Item 44 after-hours timestamp issue with Dr Whittaker and what we need to do">Item 44 timestamp issue — Dr Whittaker</div>
+        <div class="opt-q" onclick="optAsk(this.dataset.q)" data-q="What is the total revenue breakdown and biggest opportunities across the network">Total revenue breakdown and opportunities</div>
+        <div class="opt-q" onclick="optAsk(this.dataset.q)" data-q="Show me the full MBS item volume breakdown and analytics for the network">MBS item analytics overview</div>
+        <div class="opt-q" onclick="optAsk(this.dataset.q)" data-q="What audit packages do we have and what do they contain">What audit packages do we have?</div>
+        <div class="opt-q" onclick="optAsk(this.dataset.q)" data-q="How does MedicalGuard connect to Pracsoft and what data does it collect">How does the Pracsoft connection work?</div>
+        <div class="opt-q" onclick="optAsk(this.dataset.q)" data-q="Which providers have the most untapped CDM opportunity based on their patient panel?">Which providers have the most untapped CDM opportunity?</div>
+        <div class="opt-q" onclick="optAsk(this.dataset.q)" data-q="How can Dr Nguyen improve their Medicare revenue while staying fully compliant?">How can Dr Nguyen improve their Medicare revenue?</div>
+        <div class="opt-q" onclick="optAsk(this.dataset.q)" data-q="We have 8 allied health practitioners. How can we better link their services to MBS through GP referrals to increase legitimate revenue?">How can we better link allied health to MBS revenue?</div>
+        <div class="opt-q" onclick="optAsk(this.dataset.q)" data-q="What health assessments and preventive care items are we underutilising? Items like 701, 703, 705, 707, 715, 10004, 10006?">What health assessments are we missing?</div>
+        <div class="opt-q" onclick="optAsk(this.dataset.q)" data-q="Walk me through the triple bulk billing incentive items 10990, 75870, 75871 and which of our providers should be using them more.">Explain the triple bulk billing incentive items</div>
+        <div class="opt-q" onclick="optAsk(this.dataset.q)" data-q="Which of our patients with chronic conditions don't yet have a GP Management Plan? How many could we legitimately create?">How many new CDM plans could we legitimately create?</div>
+        <div class="opt-q" onclick="optAsk(this.dataset.q)" data-q="Our mental health treatment plan utilisation seems low. What's the opportunity with Items 2710, 2712, 2713 and the Better Access psychology items?">What is our MHTP revenue opportunity?</div>
+        <div class="opt-q" onclick="optAsk(this.dataset.q)" data-q="Compare Dr Patel and Dr Nguyen's billing profiles. Who has more legitimate revenue growth potential and why?">Compare Dr Patel and Dr Nguyen's revenue potential</div>
+        <div class="opt-q" onclick="optAsk(this.dataset.q)" data-q="What DVA items and entitlements might we be missing for eligible patients?">What DVA items might we be missing?</div>
+        <div class="opt-q" onclick="optAsk(this.dataset.q)" data-q="Give me a 90-day billing optimisation action plan for this practice group prioritised by dollar opportunity.">Give me a 90-day billing optimisation action plan</div>
+      </div>
+
+      <!-- Provider quick-select -->
+      <div class="sh">Ask about a specific provider</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem">
+        <div class="opt-prov" onclick="optAsk('Analyse Dr Patel\\'s billing profile and identify any legitimate revenue opportunities while noting what needs to stay the same for compliance.')">
+          <div style="display:flex;align-items:center;gap:.5rem">
+            <div style="width:26px;height:26px;border-radius:50%;background:rgba(220,38,38,.12);border:1px solid rgba(220,38,38,.25);display:flex;align-items:center;justify-content:center;font-family:var(--cond);font-size:.7rem;font-weight:700;color:#991b1b;flex-shrink:0">MP</div>
+            <div>
+              <div style="font-family:var(--cond);font-size:.82rem;font-weight:600;color:#1a2535">Dr M. Patel</div>
+              <div style="font-family:var(--mono);font-size:.46rem;color:#6b7a8d">612 claims &middot; Riverside</div>
+            </div>
+          </div>
+        </div>
+        <div class="opt-prov" onclick="optAsk('Analyse Dr Whittaker\\'s billing profile. What legitimate revenue opportunities exist beyond after-hours billing?')">
+          <div style="display:flex;align-items:center;gap:.5rem">
+            <div style="width:26px;height:26px;border-radius:50%;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);display:flex;align-items:center;justify-content:center;font-family:var(--cond);font-size:.7rem;font-weight:700;color:#92400e;flex-shrink:0">AW</div>
+            <div>
+              <div style="font-family:var(--cond);font-size:.82rem;font-weight:600;color:#1a2535">Dr A. Whittaker</div>
+              <div style="font-family:var(--mono);font-size:.46rem;color:#6b7a8d">247 claims &middot; City North</div>
+            </div>
+          </div>
+        </div>
+        <div class="opt-prov" onclick="optAsk('Analyse Dr Khan\\'s billing profile and identify legitimate revenue opportunities, particularly around CDM and preventive care items.')">
+          <div style="display:flex;align-items:center;gap:.5rem">
+            <div style="width:26px;height:26px;border-radius:50%;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);display:flex;align-items:center;justify-content:center;font-family:var(--cond);font-size:.7rem;font-weight:700;color:#92400e;flex-shrink:0">SK</div>
+            <div>
+              <div style="font-family:var(--cond);font-size:.82rem;font-weight:600;color:#1a2535">Dr S. Khan</div>
+              <div style="font-family:var(--mono);font-size:.46rem;color:#6b7a8d">418 claims &middot; Eastside</div>
+            </div>
+          </div>
+        </div>
+        <div class="opt-prov" onclick="optAsk('Analyse Dr Nguyen\\'s billing profile. They seem to have good CDM engagement. What other revenue opportunities exist?')">
+          <div style="display:flex;align-items:center;gap:.5rem">
+            <div style="width:26px;height:26px;border-radius:50%;background:rgba(13,122,108,.12);border:1px solid rgba(13,122,108,.25);display:flex;align-items:center;justify-content:center;font-family:var(--cond);font-size:.7rem;font-weight:700;color:#0d5c52;flex-shrink:0">LN</div>
+            <div>
+              <div style="font-family:var(--cond);font-size:.82rem;font-weight:600;color:#1a2535">Dr L. Nguyen</div>
+              <div style="font-family:var(--mono);font-size:.46rem;color:#6b7a8d">312 claims &middot; Westfield</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: AI chat interface -->
+    <div>
+      <div class="sh">IntelliSense Billing Optimiser <span style="font-family:var(--mono);font-size:.5rem;color:#6b7a8d;font-weight:400;letter-spacing:.06em;text-transform:none">Grounded in your live Pracsoft data</span></div>
+      <div id="opt-chat-wrap" style="display:flex;flex-direction:column;height:640px;border:1px solid rgba(217,119,6,.2);border-radius:4px;background:#f8fafc;overflow:hidden">
+        <!-- Chat header -->
+        <div style="padding:.65rem 1rem;background:#f1f5f9;border-bottom:1px solid rgba(245,158,11,.12);display:flex;align-items:center;gap:.6rem;flex-shrink:0">
+          <div style="width:28px;height:28px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);display:flex;align-items:center;justify-content:center;font-size:.75rem;color:#f59e0b">&#9672;</div>
+          <div>
+            <div style="font-family:var(--cond);font-size:.88rem;font-weight:600;color:#1a2535;letter-spacing:.04em;text-transform:uppercase">IntelliSense Billing Optimiser</div>
+            <div style="font-family:var(--mono);font-size:.48rem;color:#6b7a8d;margin-top:.1rem">Context: Southside Health Group &middot; 6 clinics &middot; 42,318 claims &middot; Live Pracsoft data</div>
+          </div>
+          <div style="margin-left:auto;display:flex;align-items:center;gap:.6rem">
+            <button onclick="clearOptChat()" style="font-family:var(--mono);font-size:.46rem;color:#6b7a8d;background:none;border:1px solid #dde2ea;padding:2px 7px;cursor:pointer;letter-spacing:.06em;text-transform:uppercase">Clear</button>
+            <span class="pulse"></span>
+            <span style="font-family:var(--mono);font-size:.5rem;color:#22c55e">Live</span>
+          </div>
+        </div>
+
+        <!-- Chat messages -->
+        <div id="opt-messages" style="flex:1;overflow-y:auto;padding:.9rem 1rem;display:flex;flex-direction:column;gap:.75rem;scrollbar-width:thin;scrollbar-color:#dde2ea transparent;background:#f8fafc">
+          <!-- Welcome message -->
+          <div style="display:flex;gap:.55rem;align-items:flex-start">
+            <div style="width:24px;height:24px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.22);display:flex;align-items:center;justify-content:center;font-size:.65rem;color:#f59e0b;flex-shrink:0;margin-top:.1rem">&#9672;</div>
+            <div style="flex:1">
+              <div style="font-family:var(--mono);font-size:.46rem;color:#f59e0b;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.25rem">IntelliSense &middot; Billing Optimiser</div>
+              <div style="background:#fffbeb;border:1px solid rgba(217,119,6,.2);padding:.75rem .85rem;font-size:.76rem;color:#334155;line-height:1.65;border-radius:0 6px 6px 6px">
+                I&rsquo;ve reviewed your Pracsoft billing data for Southside Health Group &mdash; 6 clinics, 24 GPs, 8 allied health, 42,318 claims this month.<br><br>
+                I can see <strong style="color:#f59e0b">approximately $161,000 in annual revenue opportunities</strong> that are either uncaptured or underutilised &mdash; all legitimate MBS entitlements your practice is not currently claiming. The biggest single opportunity is CDM plan creation, followed by bulk billing incentive items and allied health linkage to MBS.<br><br>
+                Ask me anything about billing optimisation, specific providers, or specific MBS items. I&rsquo;ll give you specific, actionable recommendations based on your actual data.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Input area -->
+        <div style="padding:.65rem .8rem;background:#f1f5f9;border-top:1px solid rgba(245,158,11,.1);flex-shrink:0">
+          <div style="display:flex;gap:.5rem;align-items:flex-end">
+            <textarea id="opt-input" placeholder="Ask about billing opportunities, specific providers, MBS items, CDM gaps, allied health linkage..." style="flex:1;background:#ffffff;border:1px solid rgba(245,158,11,.2);color:#1a2535;font-family:var(--font);font-size:.76rem;padding:.55rem .75rem;resize:none;min-height:52px;max-height:120px;outline:none;line-height:1.5" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();optSend()}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'"></textarea>
+            <button onclick="optSend()" id="opt-send-btn" style="padding:.55rem .9rem;background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.35);color:#f59e0b;font-family:var(--cond);font-size:.76rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;height:52px;transition:all .14s;flex-shrink:0" onmouseover="this.style.background='rgba(245,158,11,.25)'" onmouseout="this.style.background='rgba(245,158,11,.15)'">Send &rarr;</button>
+          </div>
+          <div style="font-family:var(--mono);font-size:.46rem;color:#6b7a8d;margin-top:.35rem;letter-spacing:.05em">Press Enter to send &middot; Shift+Enter for new line &middot; All recommendations are grounded in MBS rules and your Pracsoft data</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /g2 -->
+</section>
+
+<!-- HELP & FAQ -->
+<section class="panel" id="panel-help">
+  <div class="phead">
+    <div>
+      <div class="ew">Support &middot; Knowledge Base</div>
+      <div class="ptitle">Help &amp; FAQ</div>
+      <div class="psub">Answers to the most common questions about MedicalGuard &mdash; click any question to expand.</div>
+    </div>
+    <button class="btn btn-c btn-sm" onclick="startTour()">&#9654; Start Guided Tour</button>
+  </div>
+  <div class="g2 mb">
+    <div>
+      <div class="sh" style="margin-bottom:.6rem">Getting Started</div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What does MedicalGuard connect to?<span class="faq-chevron">&#9660;</span></div><div class="faq-a">MedicalGuard connects read-only to your Pracsoft SQL database. It reads claim records, appointment metadata, provider details, and billing classifications every 15 minutes. It <strong>never writes back to Pracsoft</strong>.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is patient data safe?<span class="faq-chevron">&#9660;</span></div><div class="faq-a">Patient identifiers (name, DOB, Medicare number) are replaced with opaque tokens at ingest. All data stored in Australia (AWS Sydney). Connection encrypted (TLS 1.3), stored data AES-256 encrypted. Full Data Processing Agreement provided before setup.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How long does setup take?<span class="faq-chevron">&#9660;</span></div><div class="faq-a">Pracsoft read-only connection: 2&ndash;4 hours. No software on clinical workstations. Practice manager training: 45-minute session. Most practices live within one week of signing.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How often is data updated?<span class="faq-chevron">&#9660;</span></div><div class="faq-a">Billing feed: every 15 minutes. Provider register and AHPRA registration: daily. MBS rule library: within 14 days of any MBS schedule change.</div></div>
+      <div class="sh" style="margin:.9rem 0 .6rem">Compliance &amp; Alerts</div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Why is a provider flagged when their billing seems correct?<span class="faq-chevron">&#9660;</span></div><div class="faq-a">A flag means the billing pattern sits outside the national peer benchmark &mdash; not that billing is wrong. Services Australia uses the same peer comparison. A flag is an <strong>early warning to review</strong>, not an accusation.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is the peer benchmark?<span class="faq-chevron">&#9660;</span></div><div class="faq-a">Derived from Medicare published data on billing patterns for providers in the same specialty, location type, and patient demographic cohort. MedicalGuard flags providers in the top 10% of their peer group for any item.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What do I do when I receive an alert?<span class="faq-chevron">&#9660;</span></div><div class="faq-a"><strong>1.</strong> Click the alert to view full context. <strong>2.</strong> Determine if there is a legitimate clinical explanation. <strong>3.</strong> Document it via the Internal Audit workflow. <strong>4.</strong> If a billing error is found, arrange correction through Pracsoft.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is the 80/20 rule?<span class="faq-chevron">&#9660;</span></div><div class="faq-a">Under the Health Insurance Act 1973, a practitioner cannot provide more than 80% of services to patients of a single other practitioner in 12 months. MedicalGuard monitors this and flags it 90 days before the threshold is reached.</div></div>
+      <div class="sh" style="margin:.9rem 0 .6rem">Technical</div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Can MedicalGuard change anything in Pracsoft?<span class="faq-chevron">&#9660;</span></div><div class="faq-a">No. The connection is strictly read-only. MedicalGuard cannot create, modify, or delete any record in Pracsoft.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What if the Pracsoft feed goes offline?<span class="faq-chevron">&#9660;</span></div><div class="faq-a">MedicalGuard displays the most recent data from the last successful sync and flags delayed feeds in amber on the dashboard. Alerts are not generated from stale data. Data is back-filled automatically on reconnection.</div></div>
+    </div>
+    <div>
+      <div class="sh" style="margin-bottom:.6rem">Revenue &amp; Billing Optimiser</div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is the revenue identified by IntelliSense legitimate?<span class="faq-chevron">&#9660;</span></div><div class="faq-a">Yes &mdash; every opportunity is a <strong>legitimate Medicare-funded entitlement</strong> the practice is not currently claiming. Not upcoding. IntelliSense will never recommend billing that carries Provider Review risk.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What data does IntelliSense use?<span class="faq-chevron">&#9660;</span></div><div class="faq-a">The practice's own Pracsoft data &mdash; patient demographics, chronic condition flags, care plan records, billing patterns, provider mix &mdash; combined with the current MBS schedule. All recommendations specific to this practice.</div></div>
+      <div class="sh" style="margin:.9rem 0 .6rem">Allied Health</div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How does AHPRA monitoring work?<span class="faq-chevron">&#9660;</span></div><div class="faq-a">MedicalGuard checks each allied health practitioner's AHPRA registration against the public register daily. If a registration lapses or has conditions placed on it, an alert is generated immediately.</div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">What is a TCA and why does it matter?<span class="faq-chevron">&#9660;</span></div><div class="faq-a">A Team Care Arrangement (TCA, Item 723) is required for patients to access Medicare rebates for allied health services. MedicalGuard cross-references every allied health billing event against the referring GP's Pracsoft record to confirm a valid TCA exists.</div></div>
+    </div>
+  </div>
+  <div class="ai">
+    <div class="ai-ico">&#9993;</div>
+    <div class="ai-b">
+      <div class="ai-tag">Can't find the answer? Contact Verticert AI</div>
+      <div class="ai-txt">We respond to all practice enquiries within one business day.</div>
+      <a class="ai-act" href="mailto:hello@verticertai.com.au">&#8594; hello@verticertai.com.au</a>
+    </div>
+  </div>
+</section>
+
+<!-- MBS GLOSSARY -->
+<section class="panel" id="panel-glossary">
+  <div class="phead">
+    <div>
+      <div class="ew">Reference &middot; MBS Item Guide</div>
+      <div class="ptitle">MBS Glossary</div>
+      <div class="psub">Plain-English explanations of every MBS item and compliance term used throughout MedicalGuard.</div>
+    </div>
+  </div>
+  <div class="g2 mb">
+    <div>
+      <div class="sh" style="margin-bottom:.55rem">GP Consultation Items</div>
+      <div class="gloss-item"><div class="gloss-term">Item 3</div><div class="gloss-def"><strong>Level A (brief)</strong> &mdash; attendance of brief nature. Peer benchmark: ~5% of consults.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Item 23</div><div class="gloss-def"><strong>Level B (standard, &lt;20 min)</strong> &mdash; the most common GP item. Peer benchmark: ~50&ndash;60% of consults.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Item 36</div><div class="gloss-def"><strong>Level C (long, &ge;20 min)</strong> &mdash; requires documented duration in clinical records. Peer benchmark: ~20%. PSR threshold: top 10% of peers.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Item 44</div><div class="gloss-def"><strong>After-hours consultation</strong> &mdash; outside ordinary hours. Timestamp must match Pracsoft records. Peer benchmark: ~8%.</div></div>
+      <div class="sh" style="margin:.7rem 0 .55rem">Telehealth</div>
+      <div class="gloss-item"><div class="gloss-term">Item 91890</div><div class="gloss-def"><strong>Telehealth phone (&ge;20 min)</strong> &mdash; Level C equivalent via telephone. Existing clinical relationship required.</div></div>
+      <div class="sh" style="margin:.7rem 0 .55rem">Chronic Disease Management</div>
+      <div class="gloss-item"><div class="gloss-term">Item 721</div><div class="gloss-def"><strong>GP Management Plan (GPMP)</strong> &mdash; for patients with a chronic condition. Once per 12-month period. Annual review via Item 725.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Item 723</div><div class="gloss-def"><strong>Team Care Arrangement (TCA)</strong> &mdash; coordinates GP with 2+ other treating providers. Required for allied health Medicare rebates. Valid 12 months.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Item 725</div><div class="gloss-def"><strong>GPMP review</strong> &mdash; annual review of an existing GPMP.</div></div>
+      <div class="sh" style="margin:.7rem 0 .55rem">Health Assessments</div>
+      <div class="gloss-item"><div class="gloss-term">Item 701</div><div class="gloss-def"><strong>Short health assessment (&lt;30 min)</strong> &mdash; once per calendar year per patient.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Item 715</div><div class="gloss-def"><strong>Aboriginal &amp; Torres Strait Islander health assessment</strong> &mdash; annual health check for eligible patients.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Item 10004</div><div class="gloss-def"><strong>75+ health assessment</strong> &mdash; once per 12 months.</div></div>
+    </div>
+    <div>
+      <div class="sh" style="margin-bottom:.55rem">Bulk Billing &amp; Incentives</div>
+      <div class="gloss-item"><div class="gloss-term">Item 10990</div><div class="gloss-def"><strong>Triple bulk billing incentive</strong> &mdash; additional payment for bulk billing children under 16, concession card holders, and Commonwealth seniors. One of the most under-claimed items.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Item 75870</div><div class="gloss-def"><strong>Bulk billing incentive &mdash; outer metropolitan</strong> &mdash; higher rate for eligible patients in ASGC-RA 2 areas.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Item 75871</div><div class="gloss-def"><strong>Bulk billing incentive &mdash; regional/remote</strong> &mdash; highest rate for eligible patients in regional and remote areas.</div></div>
+      <div class="sh" style="margin:.7rem 0 .55rem">Allied Health Items</div>
+      <div class="gloss-item"><div class="gloss-term">Items 10953&ndash;10970</div><div class="gloss-def"><strong>Allied health services under CDM</strong> &mdash; Medicare rebates for physio, dietitian, psychology, podiatry, OT, exercise physiology. Require current TCA (Item 723).</div></div>
+      <div class="gloss-item"><div class="gloss-term">Item 10960</div><div class="gloss-def"><strong>Physiotherapy &mdash; initial assessment under TCA</strong> &mdash; must have current Item 723 referral.</div></div>
+      <div class="sh" style="margin:.7rem 0 .55rem">Compliance Terms</div>
+      <div class="gloss-item"><div class="gloss-term">PSR</div><div class="gloss-def"><strong>Professional Services Review</strong> &mdash; independent body investigating Medicare practitioners with potentially inappropriate billing.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Peer benchmark</div><div class="gloss-def">Median billing pattern for practitioners in the same specialty and geographic cohort. MedicalGuard flags providers in the top 10% for any item.</div></div>
+      <div class="gloss-item"><div class="gloss-term">Provider Review</div><div class="gloss-def">Formal Services Australia investigation. Triggered by data-matching, complaint, or PSR referral. Documented internal audit evidence is the most effective response.</div></div>
+      <div class="gloss-item"><div class="gloss-term">80/20 rule</div><div class="gloss-def">Health Insurance Act: a practitioner cannot provide more than 80% of services to patients of a single other practitioner in 12 months.</div></div>
+      <div class="gloss-item"><div class="gloss-term">AHPRA</div><div class="gloss-def"><strong>Australian Health Practitioner Regulation Agency</strong> &mdash; national registration body. MedicalGuard checks allied health registrations daily.</div></div>
+      <div class="gloss-item"><div class="gloss-term">MHTP</div><div class="gloss-def"><strong>Mental Health Treatment Plan</strong> &mdash; created by GP for Medicare-rebated psychology sessions. Up to 10 sessions per calendar year.</div></div>
+      <div class="gloss-item"><div class="gloss-term">CDM</div><div class="gloss-def"><strong>Chronic Disease Management</strong> &mdash; Medicare framework covering Items 721, 723, 725 and allied health items.</div></div>
+    </div>
+  </div>
+</section>
+<!-- ══ PROVIDER DRILLDOWN MODAL ══ -->
+<div class="mo" id="prov-modal">
+  <div class="md">
+    <div class="md-top">
+      <div>
+        <div class="md-title" id="pm-name">Dr M. Patel</div>
+        <div class="md-sub" id="pm-sub">Riverside Clinic &middot; Provider No: 2847291J &middot; Last 30 days</div>
+      </div>
+      <button class="md-close" onclick="closeMo('prov-modal')">&#x2715;</button>
+    </div>
+    <div class="md-body">
+      <div class="md-tabs">
+        <div class="mt on" onclick="swTab(this,'pm-ov')">Overview</div>
+        <div class="mt" onclick="swTab(this,'pm-items')">Item Analysis</div>
+        <div class="mt" onclick="swTab(this,'pm-consults')">Consultations</div>
+        <div class="mt" onclick="swTab(this,'pm-risk')">Risk Assessment</div>
+      </div>
+
+      <div class="mp on" id="pm-ov">
+        <div class="g3 mb">
+          <div class="card"><div class="stripe c"></div><div class="cl c">30d Claims</div><div class="knum" id="pm-claims" style="color:#0f9b8a;font-size:1.7rem">612</div><div class="ksub" id="pm-clinic">Riverside Clinic</div></div>
+          <div class="card"><div class="stripe r"></div><div class="cl r">Risk Level</div><div class="knum" id="pm-risk-v" style="color:#dc2626;font-size:1.7rem">High</div><div class="ksub" id="pm-top-item">Item 36 &mdash; 340% of peer</div></div>
+          <div class="card"><div class="stripe g"></div><div class="cl g">Compliance Score</div><div class="knum" id="pm-score" style="color:#22c55e;font-size:1.7rem">76%</div><div class="ksub" id="pm-score-sub">Item 36 pattern drag</div></div>
+        </div>
+        <div class="ai"><div class="ai-ico">&#9672;</div><div class="ai-b"><div class="ai-tag">IntelliSense &middot; Provider Risk Summary</div><div class="ai-txt" id="pm-ai">Loading...</div><button class="ai-act">&#8594; View justification pack</button></div></div>
+        <div class="sh">Item Usage &mdash; This Provider vs Peer Average</div>
+        <div id="pm-bars"></div>
+      </div>
+
+      <div class="mp" id="pm-items">
+        <div style="background:#ffffff;border:1px solid #dde2ea">
+          <table class="dt">
+            <thead><tr><th>Item</th><th>Description</th><th>Count</th><th>% of Billings</th><th>Peer Avg</th><th>Variance</th><th>Rule</th></tr></thead>
+            <tbody id="pm-items-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="mp" id="pm-consults">
+        <div style="font-size:.72rem;color:#475569;margin-bottom:.65rem">Risk-weighted sample. Click any flagged row to open the consultation review screen.</div>
+        <div id="pm-consults-list"></div>
+      </div>
+
+      <div class="mp" id="pm-risk">
+        <div class="g2 mb">
+          <div class="card"><div class="stripe r"></div>
+            <div class="cl r">Risk Factor Analysis</div>
+            <div style="margin-top:.45rem" id="pm-risk-bars"></div>
+          </div>
+          <div class="card"><div class="stripe c"></div>
+            <div class="cl c">Recommended Actions</div>
+            <div style="margin-top:.45rem" id="pm-actions"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row" style="margin-top:.9rem;padding-top:.65rem;border-top:1px solid var(--rule)">
+        <button class="btn btn-c btn-sm" onclick="show('audit');closeMo('prov-modal')">Open Audit Workflow</button>
+        <button class="btn btn-ghost btn-sm">Generate Justification Pack</button>
+        <button class="btn btn-ghost btn-sm">Download PDF Profile</button>
+        <button class="btn btn-ghost btn-sm" onclick="closeMo('prov-modal')">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CONSULTATION REVIEW MODAL ══ -->
+<div class="mo" id="consult-modal">
+  <div class="md" style="max-width:700px">
+    <div class="md-top">
+      <div><div class="md-title">Consultation Review</div><div class="md-sub">Dr M. Patel &middot; Riverside &middot; 11 May 2026 &middot; Item 36 &middot; Duration: 14 min recorded</div></div>
+      <button class="md-close" onclick="closeMo('consult-modal')">&#x2715;</button>
+    </div>
+    <div class="md-body">
+      <div class="card mb" style="border-color:rgba(220,38,38,.3)">
+        <div class="stripe r"></div>
+        <div class="cl r">Rule Triggered</div>
+        <div style="font-family:var(--cond);font-size:.95rem;font-weight:700;color:#1a2535;margin:.28rem 0">RULE &middot; MBS-036-DURATION &mdash; Duration below 20-minute threshold</div>
+        <div style="font-size:.74rem;color:#475569">Pracsoft records this appointment as 14 minutes. Item 36 requires a consultation of at least 20 minutes. The appointment was booked into a 15-minute standard consultation slot. The discrepancy between booking type and item billed triggers this rule.</div>
+      </div>
+      <div class="g2 mb">
+        <div>
+          <div class="sh">Pracsoft Record</div>
+          <div style="display:flex;flex-direction:column;gap:.28rem;font-size:.72rem">
+            <div style="display:flex;justify-content:space-between;padding:.28rem 0;border-bottom:1px solid #eef2f7"><span style="color:#475569">Date &amp; time</span><span>11 May 2026 &middot; 10:15 AM</span></div>
+            <div style="display:flex;justify-content:space-between;padding:.28rem 0;border-bottom:1px solid #eef2f7"><span style="color:#475569">Provider</span><span>Dr M. Patel (2847291J)</span></div>
+            <div style="display:flex;justify-content:space-between;padding:.28rem 0;border-bottom:1px solid #eef2f7"><span style="color:#475569">Appointment type</span><span>Standard (15-min slot)</span></div>
+            <div style="display:flex;justify-content:space-between;padding:.28rem 0;border-bottom:1px solid #eef2f7"><span style="color:#475569">Duration recorded</span><span style="color:#dc2626">14 minutes</span></div>
+            <div style="display:flex;justify-content:space-between;padding:.28rem 0;border-bottom:1px solid #eef2f7"><span style="color:#475569">Item billed</span><span style="color:#dc2626">Item 36 (requires &ge;20 min)</span></div>
+            <div style="display:flex;justify-content:space-between;padding:.28rem 0"><span style="color:#475569">Claim status</span><span style="color:#d97706">Submitted &middot; Under review</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="sh">Reviewer Assessment</div>
+          <div style="display:flex;flex-direction:column;gap:.45rem">
+            <label style="display:flex;align-items:center;gap:.55rem;font-size:.74rem;cursor:pointer;padding:.45rem;background:#f1f5f9;border:1px solid #dde2ea"><input type="radio" name="cr-assess" style="accent-color:#16a34a"> Compliant &mdash; duration was longer than recorded</label>
+            <label style="display:flex;align-items:center;gap:.55rem;font-size:.74rem;cursor:pointer;padding:.45rem;background:#f1f5f9;border:1px solid rgba(245,158,11,.35);color:#d97706"><input type="radio" name="cr-assess" checked style="accent-color:#d97706"> Clarification required &mdash; send to provider for response</label>
+            <label style="display:flex;align-items:center;gap:.55rem;font-size:.74rem;cursor:pointer;padding:.45rem;background:#f1f5f9;border:1px solid #dde2ea"><input type="radio" name="cr-assess" style="accent-color:#dc2626"> Non-compliant &mdash; downgrade to Item 23</label>
+          </div>
+          <textarea style="width:100%;margin-top:.55rem;background:#f1f5f9;border:1px solid #dde2ea;color:#1a2535;font-family:var(--font);font-size:.72rem;padding:.45rem;resize:vertical;min-height:55px" placeholder="Reviewer notes (optional)..."></textarea>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-c btn-sm" onclick="closeMo('consult-modal')">Save &amp; Send to Provider</button>
+        <button class="btn btn-ghost btn-sm" onclick="closeMo('consult-modal')">Next Consultation</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ CELL DETAIL MODAL ══ -->
+<div class="mo" id="cell-modal">
+  <div class="md" style="max-width:480px">
+    <div class="md-top">
+      <div><div class="md-title" id="cell-title">Item Detail</div><div class="md-sub">Heatmap cell detail</div></div>
+      <button class="md-close" onclick="closeMo('cell-modal')">&#x2715;</button>
+    </div>
+    <div class="md-body">
+      <div class="ai"><div class="ai-ico">&#9672;</div><div class="ai-b"><div class="ai-tag">Cell Analysis</div><div class="ai-txt" id="cell-detail">Loading...</div></div></div>
+      <div class="btn-row"><button class="btn btn-c btn-sm" id="cell-drillbtn">Open Provider Profile</button><button class="btn btn-ghost btn-sm" onclick="closeMo('cell-modal')">Close</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Help Drawer -->
+<div id="help-drawer" class="help-drawer">
+  <div class="help-drawer-hd">
+    <div><div class="help-drawer-title" id="hd-title">Panel Help</div><div class="help-drawer-sub" id="hd-sub">MEDICALGUARD · PRACSOFT EDITION</div></div>
+    <button class="help-drawer-close" onclick="closeHelpDrawer()">&#10005;</button>
+  </div>
+  <div class="help-drawer-body" id="hd-body"></div>
+</div>
+<div id="hd-backdrop" onclick="closeHelpDrawer()" style="display:none;position:fixed;inset:0;z-index:899;background:rgba(0,0,0,.25)"></div>
+<!-- Tour Overlay -->
+<div id="tour-overlay" class="tour-overlay">
+  <div id="tour-spotlight" class="tour-spotlight"></div>
+  <div id="tour-bubble" class="tour-bubble">
+    <div class="tour-bubble-title" id="tour-title"></div>
+    <div class="tour-bubble-body" id="tour-body"></div>
+    <div class="tour-bubble-nav">
+      <span class="tour-bubble-steps" id="tour-steps"></span>
+      <div class="tour-bubble-btns">
+        <button class="btn btn-ghost btn-sm" onclick="endTour()">Skip</button>
+        <button class="btn btn-c btn-sm" id="tour-next-btn" onclick="tourNext()">Next &rarr;</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Floating chat btn -->
+<div style="position:fixed;bottom:1.1rem;right:1.1rem;z-index:700;display:flex;flex-direction:column;align-items:flex-end;gap:.4rem">
+  <div id="gchat-tip" style="display:none;background:#1a2535;color:#fff;font-size:.62rem;font-family:var(--mono);padding:.35rem .65rem;border-radius:4px;white-space:nowrap;letter-spacing:.04em;box-shadow:0 2px 8px rgba(0,0,0,.25)">Ask IntelliSense a billing question</div>
+  <button onclick="openGlobalChat()" onmouseover="document.getElementById('gchat-tip').style.display='block'" onmouseout="document.getElementById('gchat-tip').style.display='none'" style="width:50px;height:50px;border-radius:50%;background:#d97706;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.15rem;color:#fff;box-shadow:0 3px 14px rgba(217,119,6,.4)">&#9733;</button>
+</div>
+
+
+<!-- ── Data (declarations only) ── -->
+<script src="assets/js/data/date-ranges.js"></script>
+<script src="assets/js/data/audit-packs.js"></script>
+<script src="assets/js/data/help-content.js"></script>
+<script src="assets/js/data/tour-steps.js"></script>
+<script src="assets/js/data/providers.js"></script>
+<script src="assets/js/data/intellisense-responses.js"></script>
+
+<!-- ── Application (DOM event handlers) ── -->
+<script src="assets/js/app/nav.js"></script>
+<script src="assets/js/app/audit-wizard.js"></script>
+<script src="assets/js/app/audit-pack-modal.js"></script>
+<script src="assets/js/app/help-drawer.js"></script>
+<script src="assets/js/app/tour.js"></script>
+<script src="assets/js/app/provider-modal.js"></script>
+<script src="assets/js/app/heatmap.js"></script>
+<script src="assets/js/app/billing-optimiser.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+PROPRIETARY DEMO LICENSE — MedicalGuard Pracsoft Edition
+
+Copyright (c) 2026 Verticert AI Pty Ltd. All rights reserved.
+
+This software and accompanying documentation (the "Demo") is provided to the
+recipient for the limited purpose of evaluation and developer reference only.
+
+GRANT
+-----
+Subject to the terms below, Verticert AI grants the recipient a non-exclusive,
+non-transferable, revocable, royalty-free license to:
+
+  (a) view and run the Demo locally for evaluation;
+  (b) inspect, modify, and host the Demo in a private, non-production
+      environment for the purpose of integrating with the recipient's own
+      Pracsoft instance or backend;
+  (c) distribute the Demo, in whole or in part, within the recipient's
+      organisation for the purposes set out above.
+
+RESTRICTIONS
+------------
+The recipient may NOT:
+
+  (a) use the Demo or any derivative in a commercial production environment
+      without a separate written license from Verticert AI;
+  (b) re-license, sublicense, or resell the Demo to third parties;
+  (c) remove or alter any copyright, trademark, or attribution notices;
+  (d) represent the Demo as the recipient's own work.
+
+NO WARRANTY
+-----------
+THE DEMO IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR
+A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL VERTICERT AI BE
+LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM USE OF THE DEMO.
+
+The Demo includes simulated provider data, Medicare item references, and
+compliance rule examples. These are illustrative only and do not constitute
+clinical, legal, billing, or compliance advice.
+
+CONTACT
+-------
+For commercial licensing of the production MedicalGuard platform, or for any
+question about this license:
+
+    hello@verticertai.com.au

@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "1.0.0",
+  "lastUpdated": "2025-11-01",
+  "rules": [
+    {
+      "id": "MBS-036-DURATION",
+      "name": "Item 36 — Minimum Duration Check",
+      "severity": "critical",
+      "category": "GP consultation",
+      "description": "Item 36 requires a consultation of at least 20 minutes. Flags claims where the recorded Pracsoft appointment duration is below 20 minutes, or where consecutive Item 36 claims compress more than 3 per hour. Also triggers when a provider's Item 36 proportion exceeds 2× peer average for 30+ consecutive days.",
+      "source": "MBS Online · Item 36 descriptor",
+      "falsePositiveRate": 0.041,
+      "activeFlags": 3,
+      "blockMode": null
+    },
+    {
+      "id": "MBS-23-36-RATIO",
+      "name": "Item 23 / 36 Ratio Anomaly",
+      "severity": "critical",
+      "category": "GP consultation",
+      "description": "Detects providers where the ratio of Item 36 (long) to Item 23 (standard) claims sits more than 2 standard deviations from peer cohort. The classic Provider Review trigger — a high-Item-36 provider with a correspondingly low Item 23 rate is a statistical outlier that Services Australia data-matching flags automatically during provider selection for review.",
+      "source": "Services Australia compliance priorities",
+      "peerCohort": "National GP",
+      "activeFlags": 2
+    },
+    {
+      "id": "MBS-44-AFTERHRS",
+      "name": "Item 44 — After-Hours Timestamp Validation",
+      "severity": "high",
+      "category": "GP consultation",
+      "description": "Checks consultation timestamp from Pracsoft against the MBS after-hours window. Flags claims where the appointment record places the consultation inside ordinary hours but Item 44 was billed. Also flags providers with Item 44 usage significantly above peer cohort.",
+      "source": "MBS Online · After-hours items",
+      "action": "auto-flag-for-review",
+      "activeFlags": 1
+    },
+    {
+      "id": "MBS-CO-CLAIM-721",
+      "name": "CDM Item 721 Co-Claim Eligibility",
+      "severity": "medium",
+      "category": "Chronic disease management",
+      "description": "GP Management Plan (Item 721) requires the patient to have a chronic condition expected to last ≥6 months. Validates frequency rules (max once per 12 months unless exceptional circumstance) and prevents 721/723 co-claim within minimum interval. Also checks that a valid Item 723 TCA is in Pracsoft before any allied health MBS billing occurs under that plan.",
+      "source": "MBS Online · CDM items 721–732",
+      "autoRemediate": true,
+      "activeFlags": 0
+    },
+    {
+      "id": "ALLIED-TCA-VERIFY",
+      "name": "Allied Health — TCA Referral Verification",
+      "severity": "high",
+      "category": "Allied health",
+      "description": "Before any allied health practitioner bills under MBS via a Team Care Arrangement, MedicalGuard cross-references the billing event against the referring GP's Pracsoft records. A current Item 721 and a valid Item 723 referral must both be present and in-date.",
+      "source": "MBS Online · Allied health items",
+      "activeFlags": 1
+    },
+    {
+      "id": "MBS-2713-MHPLAN",
+      "name": "Item 2713 — Mental Health Plan Requirement",
+      "severity": "medium",
+      "category": "Mental health",
+      "description": "Mental health consultations (Items 2710/2712/2713) require a documented Mental Health Treatment Plan or must be appropriately linked to a plan in Pracsoft. Validates that psychology referrals (Items 80110–80180) are within the 10-session annual limit per patient.",
+      "source": "MBS Online · MH items",
+      "racgpGuidance": true,
+      "activeFlags": 0
+    },
+    {
+      "id": "MBS-DUP-CLAIM",
+      "name": "Duplicate Claim Detection",
+      "severity": "critical",
+      "category": "Billing integrity",
+      "description": "Same patient + same item + same provider + same day. The highest-confidence indicator of inadvertent double-billing. MedicalGuard checks against Pracsoft records in real time. Optional pre-submit block prevents the duplicate reaching Medicare at all.",
+      "source": "Services Australia compliance focus",
+      "blockMode": "optional-pre-submit",
+      "activeFlags": 0
+    },
+    {
+      "id": "HIC-80-20",
+      "name": "80/20 Rule — Daily Volume Monitor",
+      "severity": "critical",
+      "category": "PSR risk",
+      "description": "Section 82A of the Health Insurance Act: providing 80+ services on 20 or more days in 12 months triggers compulsory Professional Services Review. MedicalGuard runs a daily volume count for every provider with a 90-day forward projection.",
+      "source": "HIC Act s.82A · PSR trigger",
+      "realTimeAlertThreshold": 70,
+      "activeFlags": 0
+    },
+    {
+      "id": "TELE-91890-EXISTING",
+      "name": "Telehealth — Existing Patient Requirement",
+      "severity": "medium",
+      "category": "Telehealth",
+      "description": "Telehealth phone consultations require the patient to have been seen face-to-face in the same practice within the prior 12 months (with limited exceptions). Validates against Pracsoft visit history for every telehealth claim.",
+      "source": "MBS Telehealth schedule",
+      "exceptionHandling": true,
+      "activeFlags": 0
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0.0",
+  "ranges": {
+    "30": {
+      "label": "Last 30 days",
+      "claims": { "value": 42318, "subtitle": "Across 6 clinics · all providers", "trend": "▲ 3.2% vs same period last month" },
+      "score":  { "value": 94,    "subtitle": "vs MBS rules & national peer benchmark", "trend": "▲ Above peer cohort avg of 89%" },
+      "risk":   { "value": 2,     "subtitle": "Providers above peer threshold", "trend": "Action recommended this week" },
+      "findings":{ "value": 7,    "subtitle": "5 in remediation · 2 pending sign-off", "trend": "3 new since Monday" }
+    },
+    "90": {
+      "label": "Last 90 days",
+      "claims": { "value": 124847, "subtitle": "Across 6 clinics · Feb–May 2026", "trend": "▲ 4.1% vs prior 90-day period" },
+      "score":  { "value": 93,     "subtitle": "vs MBS rules & national peer benchmark", "trend": "▲ Steady · above peer avg of 89%" },
+      "risk":   { "value": 3,      "subtitle": "Providers above peer threshold (90d)", "trend": "Patel, Whittaker, Khan" },
+      "findings":{ "value": 18,    "subtitle": "11 remediated · 4 in progress · 3 pending", "trend": "7 new in last 30 days" }
+    },
+    "365": {
+      "label": "Last 12 months",
+      "claims": { "value": 498214, "subtitle": "Across 6 clinics · full 12 months", "trend": "▲ 6.8% growth year-on-year" },
+      "score":  { "value": 92,     "subtitle": "vs MBS rules & national peer benchmark", "trend": "▲ Improving · was 89% prior year" },
+      "risk":   { "value": 2,      "subtitle": "Providers above peer threshold (12m)", "trend": "Item 36 trend — network-wide" },
+      "findings":{ "value": 47,    "subtitle": "39 remediated · 8 closed · 0 outstanding", "trend": "All prior findings resolved" }
+    }
+  }
+}
