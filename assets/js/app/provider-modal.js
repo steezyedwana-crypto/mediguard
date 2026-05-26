@@ -9,6 +9,7 @@
 function provDrill(id){
   var d=PD[id];
   if(!d)return;
+  window.currentProviderId=id;          // remembered for Generate Justification / Download Profile
   document.getElementById('pm-name').textContent=d.name;
   document.getElementById('pm-sub').textContent=d.sub;
   document.getElementById('pm-claims').textContent=d.claims;
@@ -61,6 +62,20 @@ function provDrill(id){
 }
 
 // closeMo() now provided by nav.js
+
+// ── Continue an active audit cycle (from the Audit Centre summary table) ───
+// Jumps to the Audit panel, ensures the wizard is showing the right step.
+// The demo's wizard is a single Dr Patel · Item 36 scenario, so every
+// "Continue" navigates there at step 3 (Review). When wired to a real
+// backend this would load the cycle by id first.
+function continueAudit(cycleId){
+  show('audit');
+  setTimeout(function(){
+    if(typeof goAuditStep==='function'){goAuditStep(3);}
+    var top=document.getElementById('panel-audit');
+    if(top){window.scrollTo({top:top.offsetTop-20,behavior:'smooth'});}
+  },80);
+}
 function swTab(el,paneId){
   var modal=el.closest('.md');
   modal.querySelectorAll('.mt').forEach(t=>t.classList.remove('on'));
@@ -70,3 +85,34 @@ function swTab(el,paneId){
 }
 
 function consultReview(){document.getElementById('consult-modal').classList.add('open')}
+
+// ── Allied Billing Alert → "Flag for GP Review" inline confirmation ─────────
+// Replaces the alert card's button row with a confirmation chip and routes
+// the case into the Inbox queue (simulated). Accepts the button itself OR
+// null when called from the TCA Pracsoft modal.
+function flagTcaForReview(btn){
+  var row = btn && btn.closest ? btn.closest('.btn-row') : document.querySelector('.btn-row [onclick*="flagTcaForReview"]');
+  var container = row || document.querySelector('.btn-row button[onclick*="flagTcaForReview"]');
+  if (container && container.closest) container = container.closest('.btn-row');
+  if (!container) return;
+  container.innerHTML = '<div style="display:flex;align-items:center;gap:.5rem;font-size:.72rem;color:#166534;font-weight:600">'
+    + '<span style="display:inline-flex;width:18px;height:18px;border-radius:50%;background:#22c55e;color:#fff;align-items:center;justify-content:center;font-size:.7rem">&#10003;</span>'
+    + 'Flagged — routed to Dr Patel for GP review · SLA 5 business days'
+    + '</div>';
+}
+
+// ── Provider-modal actions wired to per-provider audit packs ────────────────
+// Generate Justification Pack and Download PDF Profile look up
+//   AUDIT_PACKS['justification_<providerId>']  /  AUDIT_PACKS['profile_<providerId>']
+// Falls back to Dr Patel's pack as a representative sample if a provider
+// doesn't yet have its own pack generated (covers the long tail of the
+// network without authoring 24 individual packs).
+function openPackForProvider(kind){
+  var id=window.currentProviderId||'patel';
+  var key=kind+'_'+id;
+  if(typeof AUDIT_PACKS==='undefined'||!AUDIT_PACKS[key]){
+    key=kind+'_patel';                 // safe fallback for demo coverage
+  }
+  closeMo('prov-modal');
+  setTimeout(function(){openAuditPackModal(key);},120);
+}

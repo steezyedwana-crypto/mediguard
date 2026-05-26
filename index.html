@@ -537,10 +537,10 @@
     <table class="dt">
       <thead><tr><th>Audit</th><th>Scope</th><th>Initiated</th><th>Sample</th><th>Reviewed</th><th>Findings</th><th>Status</th><th></th></tr></thead>
       <tbody>
-        <tr><td class="dm">Q1 2026 &mdash; Item 36 Review</td><td>Dr Patel &middot; Riverside</td><td>01 May</td><td>25 consults</td><td>14/25</td><td><span class="bdg br">3 flagged</span></td><td><span class="bdg ba">In Progress</span></td><td><button class="btn btn-c btn-sm" onclick="wfStep(3)">Continue</button></td></tr>
-        <tr><td class="dm">Q1 2026 &mdash; After-Hours</td><td>Dr Whittaker &middot; City North</td><td>28 Apr</td><td>18 consults</td><td>18/18</td><td><span class="bdg br">2 flagged</span></td><td><span class="bdg ba">Remediation</span></td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
-        <tr><td class="dm">CDM Utilisation Review</td><td>All clinics</td><td>15 Apr</td><td>Network-wide</td><td>Complete</td><td><span class="bdg ba">Underutilised</span></td><td><span class="bdg bb">Pending Sign-off</span></td><td><button class="btn btn-ghost btn-sm">View</button></td></tr>
-        <tr><td class="dm">Q4 2025 &mdash; Full Network</td><td>All providers</td><td>01 Feb</td><td>120 consults</td><td>120/120</td><td><span class="bdg bg">9 findings</span></td><td><span class="bdg bg">Closed</span></td><td><button class="btn btn-ghost btn-sm">Report</button></td></tr>
+        <tr><td class="dm">Q1 2026 &mdash; Item 36 Review</td><td>Dr Patel &middot; Riverside</td><td>01 May</td><td>25 consults</td><td>14/25</td><td><span class="bdg br">3 flagged</span></td><td><span class="bdg ba">In Progress</span></td><td><button class="btn btn-c btn-sm" onclick="continueAudit('patel_item36')">Continue</button></td></tr>
+        <tr><td class="dm">Q1 2026 &mdash; After-Hours</td><td>Dr Whittaker &middot; City North</td><td>28 Apr</td><td>18 consults</td><td>18/18</td><td><span class="bdg br">2 flagged</span></td><td><span class="bdg ba">Remediation</span></td><td><button class="btn btn-ghost btn-sm" onclick="openAuditPackModal('whittaker_remediation')">View</button></td></tr>
+        <tr><td class="dm">CDM Utilisation Review</td><td>All clinics</td><td>15 Apr</td><td>Network-wide</td><td>Complete</td><td><span class="bdg ba">Underutilised</span></td><td><span class="bdg bb">Pending Sign-off</span></td><td><button class="btn btn-ghost btn-sm" onclick="openAuditPackModal('cdm_review')">View</button></td></tr>
+        <tr><td class="dm">Q4 2025 &mdash; Full Network</td><td>All providers</td><td>01 Feb</td><td>120 consults</td><td>120/120</td><td><span class="bdg bg">9 findings</span></td><td><span class="bdg bg">Closed</span></td><td><button class="btn btn-ghost btn-sm" onclick="openAuditPackModal('network_q4')">Report</button></td></tr>
       </tbody>
     </table>
   </div>
@@ -692,7 +692,7 @@
         <div class="cl a">Allied Billing Alert &mdash; Action Required</div>
         <div style="font-size:.76rem;color:#1a2535;font-family:var(--cond);font-weight:600;margin:.3rem 0">&#9888; Missing TCA referral &mdash; Physiotherapy MBS billing</div>
         <div style="font-size:.68rem;color:#475569;line-height:1.55">Patient billed under MBS Item 10960 (physiotherapy under TCA) on 08/05/2026. No current Item 723 Team Care Arrangement found in Pracsoft for this patient. Item 721 GP Management Plan expires 14/03/2026. Billing invalid if TCA not current. GP review and new TCA required before next session is billed.</div>
-        <div class="btn-row"><button class="btn btn-c btn-sm">Flag for GP Review</button><button class="btn btn-ghost btn-sm">View Pracsoft Record</button></div>
+        <div class="btn-row"><button class="btn btn-c btn-sm" onclick="flagTcaForReview(this)">Flag for GP Review</button><button class="btn btn-ghost btn-sm" onclick="openMo('tca-pracsoft-modal')">View Pracsoft Record</button></div>
       </div>
 
       <div class="card" style="margin-top:.8rem">
@@ -999,12 +999,12 @@
   </div>
   <div class="sh" style="margin-bottom:.5rem">Generate New Package</div>
   <div class="g3">
-    <div class="card" style="cursor:pointer" onclick="openAuditPackModal('patel_q2')"><div class="stripe c"></div><div style="font-size:1.1rem;margin-bottom:.35rem">&#128203;</div><div class="cl c" style="font-size:.72rem">Medicare Compliance Audit Pack</div><div style="font-size:.7rem;color:#475569;margin:.3rem 0 .5rem">Full MBS item appropriateness, peer benchmarking, and clinical justification packs. Pre-built for Dr Patel and Dr Whittaker.</div><div class="btn-row"><button class="btn btn-c btn-sm">Generate</button><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openAuditPackModal('patel_q2')">View Sample</button></div></div>
-    <div class="card" style="cursor:pointer" onclick="openAuditPackModal('network_q4')"><div class="stripe g"></div><div style="font-size:1.1rem;margin-bottom:.35rem">&#128202;</div><div class="cl g" style="font-size:.72rem">Board / Audit Committee Report</div><div style="font-size:.7rem;color:#475569;margin:.3rem 0 .5rem">Quarterly pack &mdash; billing integrity score, provider risk register, findings and remediation. PDF, board-ready.</div><div class="btn-row"><button class="btn btn-c btn-sm">Generate Q2 2026</button><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openAuditPackModal('network_q4')">View Q4 2025</button></div></div>
-    <div class="card"><div class="stripe r"></div><div style="font-size:1.1rem;margin-bottom:.35rem">&#9888;</div><div class="cl r" style="font-size:.72rem">Provider Review Response Pack</div><div style="font-size:.7rem;color:#475569;margin:.3rem 0 .5rem">PSR-format clinical justification &mdash; consultation records, duration logs, peer comparison, corrective action evidence.</div><div class="btn-row"><button class="btn btn-c btn-sm">Generate</button></div></div>
-    <div class="card"><div class="stripe p"></div><div style="font-size:1.1rem;margin-bottom:.35rem">&#127877;</div><div class="cl p" style="font-size:.72rem">RACGP Accreditation Evidence</div><div style="font-size:.7rem;color:#475569;margin:.3rem 0 .5rem">Standards 1&ndash;5 evidence from Pracsoft and MedicalGuard &mdash; clinical governance, billing integrity, practitioner credentialing.</div><div class="btn-row"><button class="btn btn-c btn-sm">Generate</button></div></div>
-    <div class="card"><div class="stripe c"></div><div style="font-size:1.1rem;margin-bottom:.35rem">&#128274;</div><div class="cl c" style="font-size:.72rem">Privacy Act Evidence Pack</div><div style="font-size:.7rem;color:#475569;margin:.3rem 0 .5rem">APP compliance, data access logs, tokenisation records, NDB scheme readiness, breach response runbook.</div><div class="btn-row"><button class="btn btn-c btn-sm">Generate</button></div></div>
-    <div class="card"><div class="stripe a"></div><div style="font-size:1.1rem;margin-bottom:.35rem">&#129306;</div><div class="cl a" style="font-size:.72rem">Allied Health Compliance Report</div><div style="font-size:.7rem;color:#475569;margin:.3rem 0 .5rem">AHPRA/DAA/ESSA status, CPD compliance, TCA verification, MBS co-claim audit, scheme eligibility.</div><div class="btn-row"><button class="btn btn-c btn-sm">Generate</button></div></div>
+    <div class="card" style="cursor:pointer" onclick="openAuditPackModal('patel_q2')"><div class="stripe c"></div><div style="font-size:1.1rem;margin-bottom:.35rem">&#128203;</div><div class="cl c" style="font-size:.72rem">Medicare Compliance Audit Pack</div><div style="font-size:.7rem;color:#475569;margin:.3rem 0 .5rem">Full MBS item appropriateness, peer benchmarking, and clinical justification packs. Pre-built for Dr Patel and Dr Whittaker.</div><div class="btn-row"><button class="btn btn-c btn-sm" onclick="event.stopPropagation();openAuditPackModal('patel_q2')">Generate</button><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openAuditPackModal('patel_q2')">View Sample</button></div></div>
+    <div class="card" style="cursor:pointer" onclick="openAuditPackModal('network_q4')"><div class="stripe g"></div><div style="font-size:1.1rem;margin-bottom:.35rem">&#128202;</div><div class="cl g" style="font-size:.72rem">Board / Audit Committee Report</div><div style="font-size:.7rem;color:#475569;margin:.3rem 0 .5rem">Quarterly pack &mdash; billing integrity score, provider risk register, findings and remediation. PDF, board-ready.</div><div class="btn-row"><button class="btn btn-c btn-sm" onclick="event.stopPropagation();openAuditPackModal('network_q4')">Generate Q2 2026</button><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openAuditPackModal('network_q4')">View Q4 2025</button></div></div>
+    <div class="card" style="cursor:pointer" onclick="openAuditPackModal('psr_response')"><div class="stripe r"></div><div style="font-size:1.1rem;margin-bottom:.35rem">&#9888;</div><div class="cl r" style="font-size:.72rem">Provider Review Response Pack</div><div style="font-size:.7rem;color:#475569;margin:.3rem 0 .5rem">PSR-format clinical justification &mdash; consultation records, duration logs, peer comparison, corrective action evidence.</div><div class="btn-row"><button class="btn btn-c btn-sm" onclick="event.stopPropagation();openAuditPackModal('psr_response')">Generate</button></div></div>
+    <div class="card" style="cursor:pointer" onclick="openAuditPackModal('racgp_accreditation')"><div class="stripe p"></div><div style="font-size:1.1rem;margin-bottom:.35rem">&#127877;</div><div class="cl p" style="font-size:.72rem">RACGP Accreditation Evidence</div><div style="font-size:.7rem;color:#475569;margin:.3rem 0 .5rem">Standards 1&ndash;5 evidence from Pracsoft and MedicalGuard &mdash; clinical governance, billing integrity, practitioner credentialing.</div><div class="btn-row"><button class="btn btn-c btn-sm" onclick="event.stopPropagation();openAuditPackModal('racgp_accreditation')">Generate</button></div></div>
+    <div class="card" style="cursor:pointer" onclick="openAuditPackModal('privacy_act')"><div class="stripe c"></div><div style="font-size:1.1rem;margin-bottom:.35rem">&#128274;</div><div class="cl c" style="font-size:.72rem">Privacy Act Evidence Pack</div><div style="font-size:.7rem;color:#475569;margin:.3rem 0 .5rem">APP compliance, data access logs, tokenisation records, NDB scheme readiness, breach response runbook.</div><div class="btn-row"><button class="btn btn-c btn-sm" onclick="event.stopPropagation();openAuditPackModal('privacy_act')">Generate</button></div></div>
+    <div class="card" style="cursor:pointer" onclick="openAuditPackModal('allied_health')"><div class="stripe a"></div><div style="font-size:1.1rem;margin-bottom:.35rem">&#129306;</div><div class="cl a" style="font-size:.72rem">Allied Health Compliance Report</div><div style="font-size:.7rem;color:#475569;margin:.3rem 0 .5rem">AHPRA/DAA/ESSA status, CPD compliance, TCA verification, MBS co-claim audit, scheme eligibility.</div><div class="btn-row"><button class="btn btn-c btn-sm" onclick="event.stopPropagation();openAuditPackModal('allied_health')">Generate</button></div></div>
   </div>
 </section>
 
@@ -1301,7 +1301,7 @@
           <div class="card"><div class="stripe r"></div><div class="cl r">Risk Level</div><div class="knum" id="pm-risk-v" style="color:#dc2626;font-size:1.7rem">High</div><div class="ksub" id="pm-top-item">Item 36 &mdash; 340% of peer</div></div>
           <div class="card"><div class="stripe g"></div><div class="cl g">Compliance Score</div><div class="knum" id="pm-score" style="color:#22c55e;font-size:1.7rem">76%</div><div class="ksub" id="pm-score-sub">Item 36 pattern drag</div></div>
         </div>
-        <div class="ai"><div class="ai-ico">&#9672;</div><div class="ai-b"><div class="ai-tag">IntelliSense &middot; Provider Risk Summary</div><div class="ai-txt" id="pm-ai">Loading...</div><button class="ai-act">&#8594; View justification pack</button></div></div>
+        <div class="ai"><div class="ai-ico">&#9672;</div><div class="ai-b"><div class="ai-tag">IntelliSense &middot; Provider Risk Summary</div><div class="ai-txt" id="pm-ai">Loading...</div><button class="ai-act" onclick="openPackForProvider('justification')">&#8594; View justification pack</button></div></div>
         <div class="sh">Item Usage &mdash; This Provider vs Peer Average</div>
         <div id="pm-bars"></div>
       </div>
@@ -1335,8 +1335,8 @@
 
       <div class="btn-row" style="margin-top:.9rem;padding-top:.65rem;border-top:1px solid var(--rule)">
         <button class="btn btn-c btn-sm" onclick="show('audit');closeMo('prov-modal')">Open Audit Workflow</button>
-        <button class="btn btn-ghost btn-sm">Generate Justification Pack</button>
-        <button class="btn btn-ghost btn-sm">Download PDF Profile</button>
+        <button class="btn btn-ghost btn-sm" onclick="openPackForProvider('justification')">Generate Justification Pack</button>
+        <button class="btn btn-ghost btn-sm" onclick="openPackForProvider('profile')">Download PDF Profile</button>
         <button class="btn btn-ghost btn-sm" onclick="closeMo('prov-modal')">Close</button>
       </div>
     </div>
@@ -1432,9 +1432,43 @@
 </div>
 
 
+<!-- ══ TCA / PRACSOFT REFERRAL RECORD MODAL ══ -->
+<div class="mo" id="tca-pracsoft-modal">
+  <div class="md" style="max-width:560px">
+    <div class="md-top">
+      <div>
+        <div class="md-name">Pracsoft Referral Record &mdash; Patient PR-088421</div>
+        <div class="md-sub">Read-only mirror &middot; Sourced from HCNSQL07 &middot; Refreshed 12 min ago</div>
+      </div>
+      <button class="md-close" onclick="closeMo('tca-pracsoft-modal')">&#x2715;</button>
+    </div>
+    <div class="md-body">
+      <div class="ai" style="margin-bottom:.75rem">
+        <div class="ai-ico">&#9888;</div>
+        <div class="ai-b">
+          <div class="ai-tag">MedicalGuard finding</div>
+          <div class="ai-txt">Pracsoft has <strong>no current Item 723 Team Care Arrangement</strong> on file for this patient. Allied health billing under MBS Item 10960 on 08/05/2026 cannot be substantiated without a valid TCA.</div>
+        </div>
+      </div>
+      <div class="sh" style="margin:.4rem 0 .5rem">Patient referral history (last 24 months)</div>
+      <div style="background:#f8fafc;border:1px solid #dde2ea;border-radius:4px;font-family:var(--mono);font-size:.66rem;color:#475569;padding:.6rem .75rem;line-height:1.7;white-space:pre">12/02/2024  Item 721 GPMP        Dr Patel       expired 12/02/2025
+08/03/2024  Item 723 TCA         Dr Patel       expired 08/03/2025
+14/04/2025  Item 732 Plan review Dr Patel       expired 14/04/2026  &larr; LAST
+08/05/2026  Item 10960 Physio    S. Mitchell    BILLED &mdash; NO ACTIVE TCA</div>
+      <div class="sh" style="margin:.85rem 0 .4rem">Suggested action</div>
+      <div style="font-size:.74rem;color:#475569;line-height:1.65;margin-bottom:.7rem">Either (a) hold the allied health claim until a fresh Item 721/723 cycle is completed with the referring GP, or (b) refund the claim if it has already been submitted to Medicare. MedicalGuard can block this claim pre-submit if you turn on auto-block for missing TCA.</div>
+      <div class="btn-row" style="margin-top:.6rem;padding-top:.6rem;border-top:1px solid var(--rule)">
+        <button class="btn btn-c btn-sm" onclick="flagTcaForReview(null);closeMo('tca-pracsoft-modal')">Flag for GP Review</button>
+        <button class="btn btn-ghost btn-sm" onclick="closeMo('tca-pracsoft-modal')">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ── Data (declarations only) ── -->
 <script src="assets/js/data/date-ranges.js"></script>
 <script src="assets/js/data/audit-packs.js"></script>
+<script src="assets/js/data/audit-packs-extra.js"></script>
 <script src="assets/js/data/help-content.js"></script>
 <script src="assets/js/data/tour-steps.js"></script>
 <script src="assets/js/data/providers.js"></script>
